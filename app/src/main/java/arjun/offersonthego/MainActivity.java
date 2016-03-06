@@ -1,4 +1,4 @@
-package android.arjun.gps;
+package android.arjun.offersonthego;
 
 import android.content.Context;
 import android.location.Location;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView tv = (TextView) parent.getSelectedView();
+                TextView tv = (TextView)  parent.getSelectedView();
 
 
                 Toast.makeText(context, tv.getText(), Toast.LENGTH_LONG);
