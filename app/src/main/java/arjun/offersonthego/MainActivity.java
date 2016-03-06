@@ -1,4 +1,5 @@
-package android.arjun.offersonthego;
+package arjun.offersonthego;
+
 
 import android.content.Context;
 import android.location.Location;
@@ -16,10 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import arjun.offersonthego.R;
 
 public class MainActivity extends AppCompatActivity {
 
