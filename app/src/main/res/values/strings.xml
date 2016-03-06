@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Offersonthego</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="categoryofproducts">
+
+        <item>Electronics</item>
+        <item>Grocery</item>
+        <item>Plants</item>
+
+
+
+    </string-array>
+</resources>
