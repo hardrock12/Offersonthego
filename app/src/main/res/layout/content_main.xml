@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,30 +13,49 @@
     tools:showIn="@layout/activity_main">
 
     <EditText
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="60dp"
-        android:id="@+id/editText2"
+        android:id="@+id/txt_search"
         android:layout_marginTop="63dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:text="Search" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText2"
+        android:id="@+id/btn_Search"
+        android:layout_below="@+id/txt_search"
         android:layout_centerHorizontal="true" />
 
     <Spinner
-        android:layout_width="210dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/category_list"
-        android:layout_alignTop="@+id/editText2"
-        android:layout_toRightOf="@+id/editText2"
-        android:layout_toEndOf="@+id/editText2"
-        android:layout_above="@+id/button" />
+        android:layout_alignTop="@+id/txt_search"
+        android:layout_toRightOf="@+id/txt_search"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:entries="@array/categoryofproducts"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp" />
+
+    <SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        android:layout_below="@+id/btn_Search"
+        android:layout_toStartOf="@+id/btn_Search"
+        android:layout_above="@+id/imageView"
+        android:layout_toLeftOf="@+id/btn_Search" />
 
 </RelativeLayout>

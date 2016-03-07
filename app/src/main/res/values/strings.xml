@@ -8,6 +8,6 @@
         <item>Plants</item>
 
 
-
     </string-array>
+    <string name="title_activity_search__result">Search Result</string>
 </resources>
