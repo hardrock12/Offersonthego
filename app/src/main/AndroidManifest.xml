@@ -27,6 +27,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="arjun.offersonthego.MainActivity" />
         </activity>
+        <activity
+            android:name=".login"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="arjun.offersonthego.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

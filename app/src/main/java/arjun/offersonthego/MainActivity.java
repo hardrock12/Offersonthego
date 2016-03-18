@@ -26,12 +26,10 @@ public class MainActivity extends AppCompatActivity {
 
 public final  static  String SEARCH_TERM="arjun.mainactivity.SEARCHTERM";
 public final  static  String SEARCH_CATEGORY="arjun.mainactivity.SEARCHCATEGEORY";
-
+public MenuItem sign_in;
+   // public Menu menu;
     Context context;
     String msearch_category="";
-
-    // this is githtb test
-    
     String msearch_term="";
     EditText txt_search;
     @Override
@@ -39,7 +37,11 @@ public final  static  String SEARCH_CATEGORY="arjun.mainactivity.SEARCHCATEGEORY
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context=this;
+       // menu = (Menu) findViewById(R.id.sigin_as_seller);
+        sign_in=(MenuItem) findViewById(R.id.sigin_as_seller);
         txt_search=(EditText) findViewById(R.id.txt_search);
+
+
 // setup spin
        Spinner spin=(Spinner)findViewById(R.id.category_list);
       /*  ArrayAdapter<CharSequence> adapter=new ArrayAdapter<CharSequence>(this,R.array.categoryofproducts,android.R.layout.simple_spinner_item);
@@ -105,6 +107,7 @@ msearch_term=txt_search.getText().toString();
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+
         return true;
     }
 
@@ -123,7 +126,14 @@ msearch_term=txt_search.getText().toString();
 
             return true;
         }
+        else if(id == R.id.sigin_as_seller)
+        {
+            Intent intent = new Intent(context,login.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
