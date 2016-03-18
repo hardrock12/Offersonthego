@@ -4,8 +4,16 @@
     <string-array name="categoryofproducts">
 
         <item>Electronics</item>
-        <item>Grocery</item>
-        <item>Plants</item>
+        <item>Groceries</item>
+        <item>Home and Furniture</item>
+        <item>Clothing</item>
+        <item>Home and Furniture</item>
+        <item>Sports</item>
+        <item>Food</item>
+        <item>Electrical</item>
+        <item>Books and Media</item>
+        <item>Pharmacy</item>
+        <item>Other</item>
 
 
     </string-array>
