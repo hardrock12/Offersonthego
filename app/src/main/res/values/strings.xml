@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Offersonthego</string>
+    <string name="app_name">Offers on the Go</string>
     <string name="action_settings">Settings</string>
     <string-array name="categoryofproducts">
 
@@ -18,5 +18,5 @@
 
     </string-array>
     <string name="title_activity_search__result">Search Result</string>
-    <string name="title_activity_login">login</string>
+    <string name="title_activity_login">Login</string>
 </resources>

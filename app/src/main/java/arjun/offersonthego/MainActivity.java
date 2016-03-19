@@ -53,7 +53,7 @@ public MenuItem sign_in;
                 TextView tv = (TextView) parent.getSelectedView();
                 msearch_category = tv.getText().toString();
 
-                Toast.makeText(context, tv.getText(), Toast.LENGTH_LONG).show();
+                //   Toast.makeText(context, tv.getText(), Toast.LENGTH_LONG).show();
             }
 
             @Override
