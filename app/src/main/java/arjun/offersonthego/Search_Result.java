@@ -1,12 +1,17 @@
 package arjun.offersonthego;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -74,6 +79,10 @@ class Search_Results_Model {
 
 
 public class Search_Result extends AppCompatActivity {
+    Context context;
+    public static String SEARCH_PHP_SCRIPT = "http://offersonthego.16mb.com/API/api.products.php?";
+    public static String SEARCH_TERM = "";
+    public static String SEARCH_CATEGORY = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,22 +90,49 @@ public class Search_Result extends AppCompatActivity {
         setContentView(R.layout.activity_search__result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
         Intent intent = getIntent();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String searchterm = intent.getStringExtra(MainActivity.SEARCH_TERM);
         String searchcat = intent.getStringExtra(MainActivity.SEARCH_CATEGORY);
+        SEARCH_TERM = searchterm;
+        SEARCH_CATEGORY = searchcat;
 // connecting to listview by adapter
         ArrayList<Search_Results_Model> arraylist = new ArrayList<Search_Results_Model>();
         Search_ItemsAdapter search_itemsAdapter = new Search_ItemsAdapter(this, arraylist);
         ListView lvsresults = (ListView) findViewById(R.id.lv_search_results);
         lvsresults.setAdapter(search_itemsAdapter);
+// setting on click listener for Listview
+        lvsresults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+            }
+        });
         //new thread for async network task
         searchtask tasks = new searchtask(findViewById(android.R.id.content));
         tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_filter, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.filter_icon:
+                Filter_list_dialog filter_list_dialog = new Filter_list_dialog(context, findViewById(android.R.id.content));
+                filter_list_dialog.show(getFragmentManager(), "FILTER");
+
+        }
+        return true;
+    }
 
 }
 
@@ -119,6 +155,7 @@ class searchtask extends AsyncTask<String, Void, String> {
 
         ListView lvsearch = (ListView) rv.findViewById(R.id.lv_search_results);
         Search_ItemsAdapter adapter = (Search_ItemsAdapter) lvsearch.getAdapter();
+        adapter.clear();
         adapter.addAll(Search_Results_Model.fromJson(jsonArray));
 
 
@@ -147,7 +184,7 @@ class searchtask extends AsyncTask<String, Void, String> {
                 response.append(strline);
             }
             input.close();
-        }
+            }
 
         return response.toString();
 
@@ -155,3 +192,4 @@ class searchtask extends AsyncTask<String, Void, String> {
     }
 
 }
+

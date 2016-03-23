@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:offersonthego="http://schemas.android.com/apk/res-auto">
+    tools:context="arjun.offersonthego.Search_Result">
+
+    <item
+        android:id="@+id/filter_icon"
+        android:orderInCategory="100"
+        android:title="Filter"
+        android:icon="@drawable/img_filter_icon"
+        app:showAsAction="always"></item>
+
+</menu>

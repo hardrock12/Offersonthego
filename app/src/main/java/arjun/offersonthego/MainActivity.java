@@ -130,6 +130,7 @@ msearch_term=txt_search.getText().toString();
         {
             Intent intent = new Intent(context,login.class);
             startActivity(intent);
+
         }
 
         return super.onOptionsItemSelected(item);
