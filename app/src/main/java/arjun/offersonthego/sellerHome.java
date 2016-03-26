@@ -92,7 +92,7 @@ public class sellerHome extends AppCompatActivity {
     public static String LOGIN_PHP_SCRIPT = "http://10.0.2.2/mini/API/loginapi.php?";
     public static String LOGIN_NAMES = "";
     public static String LOGIN_PASSWDS = "";
-    public TextView v;
+   // public TextView v;
     public String id;
 
     @Override
@@ -111,9 +111,9 @@ public class sellerHome extends AppCompatActivity {
         LOGIN_PASSWDS = loginpasswd;
 Log.i("ootg",loginname+":"+loginpasswd);
 
-        v = (TextView)findViewById(R.id.sh_id);
+       // v = (TextView)findViewById(R.id.sh_id);
         //v.setText(loginname);
-       v.setText("HAI");
+     //  v.setText("HAI");
        // ArrayList<Login_Model> arraylist = new ArrayList<Login_Model>();
 
         //code remaining
@@ -185,10 +185,18 @@ return;
             }
 
 
-
+            TextView sh_id=(TextView)rv.findViewById(R.id.sh_id);
             TextView sh_name=(TextView)rv.findViewById(R.id.sh_name);
+            TextView sh_address=(TextView)rv.findViewById(R.id.sh_address);
+            TextView sh_region=(TextView)rv.findViewById(R.id.sh_region);
+            TextView sh_type=(TextView)rv.findViewById(R.id.sh_type);
+            TextView sh_pno=(TextView)rv.findViewById(R.id.sh_pno);
+            sh_id.setText(jsonObject.getString("shopid"));
             sh_name.setText(jsonObject.getString("shop_name"));
-           // sh_name.setText("Hello"); //ithum display aavanilla
+            sh_address.setText(jsonObject.getString("address"));
+            sh_region.setText(jsonObject.getString("region"));
+            sh_type.setText(jsonObject.getString("shop_type"));
+            sh_pno.setText(jsonObject.getString("ph_no"));
             Log.i("ootg",sh_name.getText().toString());
 
         } catch (JSONException e) {

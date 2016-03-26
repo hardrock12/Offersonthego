@@ -17,16 +17,16 @@
         android:layout_height="wrap_content"
         android:text="Shop id:"
         android:id="@+id/Label1"
+        android:textSize="15dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="20dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sh_id"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/Label1"
         android:layout_marginLeft="32dp"
@@ -35,90 +35,90 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shop Name:"
+        android:text="Shop Name:    "
         android:id="@+id/Label2"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/Label1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="27dp"
-        android:textSize="20dp" />
+        android:layout_toLeftOf="@+id/sh_name"
+        android:layout_toStartOf="@+id/sh_name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address:"
+        android:text="Address:   "
         android:id="@+id/Label3"
-        android:layout_marginTop="32dp"
-        android:textSize="20dp"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/Label2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/Label2"
+        android:layout_alignStart="@+id/Label2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Region:"
+        android:text="Region:  "
         android:id="@+id/Label4"
-        android:layout_marginTop="33dp"
-        android:textSize="20dp"
-        android:layout_below="@+id/Label3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/sh_address"
+        android:layout_toLeftOf="@+id/sh_region"
+        android:layout_toStartOf="@+id/sh_region" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shop Type:"
+        android:text="Shop Type:   "
         android:id="@+id/textView4"
-        android:layout_marginTop="28dp"
-        android:textSize="20dp"
-        android:layout_below="@+id/Label4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/sh_region"
+        android:layout_alignLeft="@+id/Label4"
+        android:layout_alignStart="@+id/Label4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating:"
+        android:text="Rating:   "
         android:id="@+id/Label5"
-        android:textSize="20dp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp" />
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/sh_type"
+        android:layout_toLeftOf="@+id/sh_rating"
+        android:layout_toStartOf="@+id/sh_rating" />
 
     <TextView
-        android:layout_width="250px"
+        android:layout_width="500px"
         android:layout_height="wrap_content"
         android:id="@+id/sh_name"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_alignTop="@+id/Label2"
-        android:layout_centerHorizontal="true"
-        android:text="shop name"/>
+        android:layout_alignLeft="@+id/sh_id"
+        android:layout_alignStart="@+id/sh_id" />
 
     <TextView
-        android:layout_width="250px"
+        android:layout_width="500px"
         android:layout_height="wrap_content"
         android:id="@+id/sh_address"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_alignTop="@+id/Label3"
         android:layout_toRightOf="@+id/Label3"
         android:layout_toEndOf="@+id/Label3" />
 
     <TextView
-        android:layout_width="250px"
+        android:layout_width="500px"
         android:layout_height="wrap_content"
-        android:id="@+id/textView7"
-        android:textSize="20dp"
+        android:id="@+id/sh_region"
+        android:textSize="15dp"
         android:layout_alignTop="@+id/Label4"
         android:layout_toRightOf="@+id/Label1"
         android:layout_toEndOf="@+id/Label1" />
 
     <TextView
-        android:layout_width="250px"
+        android:layout_width="500px"
         android:layout_height="wrap_content"
         android:id="@+id/sh_type"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:layout_alignTop="@+id/textView4"
         android:layout_alignLeft="@+id/sh_id"
         android:layout_alignStart="@+id/sh_id" />
@@ -131,5 +131,27 @@
         android:layout_alignBottom="@+id/Label5"
         android:layout_toRightOf="@+id/Label4"
         android:layout_toEndOf="@+id/Label4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ph no:   "
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView5"
+        android:textSize="15dp"
+        android:layout_below="@+id/Label5"
+        android:layout_alignLeft="@+id/Label5"
+        android:layout_alignStart="@+id/Label5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sh_pno"
+        android:layout_alignLeft="@+id/sh_rating"
+        android:layout_alignStart="@+id/sh_rating"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignRight="@+id/sh_region"
+        android:layout_alignEnd="@+id/sh_region" />
 
 </RelativeLayout>
