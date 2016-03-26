@@ -89,7 +89,7 @@ class Login_Model {
 
 public class sellerHome extends AppCompatActivity {
     Context context;
-    public static String LOGIN_PHP_SCRIPT = "http://10.0.2.2/mini/API/loginapi.php?";
+    public static String LOGIN_PHP_SCRIPT = "http://offersonthego.16mb.com/API/loginapi.php?";
     public static String LOGIN_NAMES = "";
     public static String LOGIN_PASSWDS = "";
    // public TextView v;
@@ -141,8 +141,8 @@ Log.i("ootg",loginname+":"+loginpasswd);
 
         //new thread for async network task
         LoginTask tasks = new LoginTask(findViewById(android.R.id.content),this);
-        Log.i("ootg","http://10.0.2.2/mini/API/loginapi.php?usr=" + loginname + "&pwd=" + loginpasswd);
-       tasks.execute("http://10.0.2.2/mini/API/loginapi.php?usr=" + loginname + "&pwd=" + loginpasswd);
+        Log.i("ootg","http://offersonthego.16mb.com/API/loginapi.php?usr=" + loginname + "&pwd=" + loginpasswd);
+       tasks.execute("http://offersonthego.16mb.com/API/loginapi.php?usr=" + loginname + "&pwd=" + loginpasswd);
         //tasks.execute("http://10.0.2.2/mini/API/loginapi.php?usr=arjun123&pwd=1234");
        // tasks.execute("http://10.0.2.2/mini/API/loginapi.php?usr="+"arjun123"+"&pwd="+"1234");
 

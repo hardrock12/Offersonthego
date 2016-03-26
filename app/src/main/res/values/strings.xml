@@ -17,6 +17,7 @@
 
 
     </string-array>
+    <string name="title_activity_seller_home">Seller Home</string>
     <string name="title_activity_search__result">Search Result</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_product_details">product_details</string>
