@@ -58,4 +58,14 @@
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="empty"
+        android:id="@+id/testview"
+        android:layout_alignRight="@+id/passwd"
+        android:layout_alignEnd="@+id/passwd"
+        android:layout_alignLeft="@+id/logInButton"
+        android:layout_alignStart="@+id/logInButton" />
+
 </RelativeLayout>
