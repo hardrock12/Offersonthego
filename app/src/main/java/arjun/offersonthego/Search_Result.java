@@ -1,28 +1,35 @@
 package arjun.offersonthego;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
+
 import android.widget.ListView;
+
+import android.location.*;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,6 +42,7 @@ class Search_Results_Model {
     public String Avail;
     public String shopid;
     public String productid;
+    public String distance;
 
     public static Search_Results_Model fromJson(JSONObject jsonObject) {
         Search_Results_Model model = new Search_Results_Model();
@@ -46,7 +54,7 @@ class Search_Results_Model {
             model.description = jsonObject.getString("description");
             model.price = jsonObject.getString("price");
             model.Avail = jsonObject.getString("availability");
-
+            model.distance = jsonObject.getString("distance");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,6 +91,35 @@ public class Search_Result extends AppCompatActivity {
     public static String SEARCH_PHP_SCRIPT = "http://offersonthego.16mb.com/API/api.products.php?";
     public static String SEARCH_TERM = "";
     public static String SEARCH_CATEGORY = "";
+    public static String CURRENT_LAT = "";
+    public static String CURRENT_LONG = "";
+    public ProgressDialog mprogressDialoggps;
+
+    private double[] getGPS() {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = lm.getProviders(true);
+
+/* Loop over the array backwards, and if you get an accurate location, then break                 out the loop*/
+        Location l = null;
+
+        for (int i = providers.size() - 1; i >= 0; i--) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null) break;
+        }
+
+        double[] gps = new double[2];
+        if (l != null) {
+            gps[0] = l.getLatitude();
+            gps[1] = l.getLongitude();
+        } else {
+            gps[0] = gps[1] = -1;
+
+
+        }
+        Log.i("ootg", String.valueOf(gps[0]) + String.valueOf(gps[1]));
+        Toast.makeText(this, String.valueOf(gps[0] + String.valueOf(gps[1])), Toast.LENGTH_SHORT).show();
+        return gps;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,14 +147,31 @@ public class Search_Result extends AppCompatActivity {
 
             }
         });
+        //getting gps
+
+        mprogressDialoggps = ProgressDialog.show(context, "Please Wait", "Locating the device");
+
+// retrieving gps
+        double locs[] = getGPS();
+        if (locs[0] != -1) {
+            Search_Result.CURRENT_LAT = String.valueOf(locs[0]);
+            Search_Result.CURRENT_LONG = String.valueOf(locs[1]);
+        } else {
+            Search_Result.CURRENT_LAT = "-1";
+            Search_Result.CURRENT_LONG = "-1";
+        }
+
+        //Thread.sleep(2000);
+        mprogressDialoggps.dismiss();
         //new thread for async network task
-        searchtask tasks = new searchtask(findViewById(android.R.id.content));
-        tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
+        searchtask tasks = new searchtask(findViewById(android.R.id.content), context);
+        tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&lat=" + CURRENT_LAT + "&long=" + CURRENT_LONG);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.search_filter, menu);
         return true;
     }
@@ -131,7 +185,8 @@ public class Search_Result extends AppCompatActivity {
                 filter_list_dialog.show(getFragmentManager(), "FILTER");
 
         }
-        return true;
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
@@ -139,13 +194,18 @@ public class Search_Result extends AppCompatActivity {
 class searchtask extends AsyncTask<String, Void, String> {
     private View rv;
 
-    searchtask(View rootview) {
+    private Context mcontext;
+
+    searchtask(View rootview, Context context) {
         this.rv = rootview;
+        this.mcontext = context;
     }
+
 
     @Override
     protected void onPostExecute(String response) {
         JSONArray jsonArray = null;
+        Log.i("ootg", "json response:" + response);
         try {
             jsonArray = new JSONArray(response);
         } catch (JSONException e) {
@@ -165,12 +225,16 @@ class searchtask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... url) {
         String response = "";
+
+
         try {
             response = get_results(url[0]);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return response;
+
     }
 
     public String get_results(String url_toget) throws IOException {
@@ -184,7 +248,7 @@ class searchtask extends AsyncTask<String, Void, String> {
                 response.append(strline);
             }
             input.close();
-            }
+        }
 
         return response.toString();
 

@@ -30,10 +30,13 @@ public class Search_ItemsAdapter extends ArrayAdapter<Search_Results_Model> {
         TextView pname = (TextView) convertView.findViewById(R.id.lv_pname);
         TextView description = (TextView) convertView.findViewById(R.id.lv_description);
         TextView cost = (TextView) convertView.findViewById(R.id.lv_price);
+        TextView distancetoshop = (TextView) convertView.findViewById(R.id.navigation_distance);
         pname.setText(result_item.product_name);
         description.setText(result_item.description);
-        cost.setText(result_item.price);
-
+        cost.setText("\u20B9 " + result_item.price);
+        if (result_item.distance != null) {
+            distancetoshop.setText(result_item.distance + " m");
+        }
         return convertView;
     }
 }

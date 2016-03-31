@@ -17,7 +17,7 @@
         android:layout_height="150dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/imageView2" />
+        android:id="@+id/product_image" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,23 +25,144 @@
         android:layout_height="wrap_content"
         android:text="Jive Milk Shake"
         android:textSize="20sp"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_toRightOf="@+id/imageView2"
-        android:layout_toEndOf="@+id/imageView2"
+        android:layout_alignTop="@+id/product_image"
+        android:layout_toRightOf="@+id/product_image"
+        android:layout_toEndOf="@+id/product_image"
         android:layout_marginLeft="41dp"
         android:layout_marginStart="41dp"
         android:layout_marginTop="41dp"
-        android:id="@+id/textView3" />
+        android:id="@+id/product_name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pcost"
-        android:text="COST:"
+        android:text="MRP:"
 
-        android:layout_below="@+id/textView3"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/product_name"
+        android:layout_alignLeft="@+id/product_name"
+        android:layout_alignStart="@+id/product_name"
         android:layout_marginTop="17dp"
         android:textColor="#6a0f0f" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selling_price"
+        android:text="Selling Price:"
+        android:layout_below="@+id/pcost"
+        android:layout_alignLeft="@+id/pcost"
+        android:layout_alignStart="@+id/pcost" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/you_save"
+        android:text="You Save "
+
+        android:textColor="#42b642"
+        android:layout_below="@+id/selling_price"
+        android:layout_alignLeft="@+id/selling_price"
+        android:layout_alignStart="@+id/selling_price" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:id="@+id/Product_Rating"
+        android:text="Rating:"
+        android:textColor="#000000"
+
+        android:layout_below="@+id/you_save"
+        android:layout_alignLeft="@+id/you_save"
+        android:layout_alignStart="@+id/you_save" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_Rate_this_product"
+        android:text="Rate product"
+        android:layout_alignBottom="@+id/ratingBar"
+        android:layout_alignLeft="@+id/product_image"
+        android:layout_alignStart="@+id/product_image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_sold_by"
+        android:text="Sold by "
+        android:textSize="20sp"
+
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/product_image"
+        android:layout_alignStart="@+id/product_image"
+        android:layout_alignRight="@+id/selling_price"
+        android:layout_alignEnd="@+id/selling_price" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/product_image"
+        android:layout_alignRight="@+id/product_name"
+        android:layout_alignEnd="@+id/product_name"
+        android:id="@+id/ratingBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:id="@+id/Shop_Address"
+
+
+        android:layout_below="@+id/tx_sold_by"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact us "
+
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignLeft="@+id/tx_sold_by"
+        android:layout_alignStart="@+id/tx_sold_by"
+        android:id="@+id/textView4" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call 9495889419"
+        android:layout_below="@+id/tx_sold_by"
+        android:layout_toRightOf="@+id/tx_Rate_this_product"
+        android:layout_toEndOf="@+id/tx_Rate_this_product"
+        android:layout_marginTop="41dp"
+        android:id="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Navigate To"
+        android:layout_below="@+id/button"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:id="@+id/button2" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:fillViewport="false"
+        android:layout_below="@+id/button2"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/large_text" />
+
+    </ScrollView>
+
 </RelativeLayout>
