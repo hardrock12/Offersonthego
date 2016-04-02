@@ -31,6 +31,7 @@ public class Filter_list_dialog extends DialogFragment {
                     case 0:
                         category_list_dialog categoryListDialog = new category_list_dialog(mcontext, mrootview);
                         categoryListDialog.show(getFragmentManager(), "CATEGORY");
+                        
                         break;
 
                     case 1:
