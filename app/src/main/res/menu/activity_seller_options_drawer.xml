@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/add_product"
+            android:icon="@drawable/add_icon"
+            android:title="Add Product" />
+        <item
+            android:id="@+id/update_product"
+            android:icon="@drawable/update_icon"
+            android:title="Update Product" />
+        <item
+            android:id="@+id/change_availability"
+            android:icon="@drawable/change_icon"
+            android:title="Change Availability" />
+        <item
+            android:id="@+id/remove_product"
+            android:icon="@drawable/delet"
+            android:title="Remove Product" />
+        <item
+            android:id="@+id/update_location"
+            android:icon="@drawable/location_icon"
+            android:title="Update Location" />
+        <item
+            android:id="@+id/feature_product"
+            android:icon="@drawable/star"
+            android:title="Feature Product" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/logout_icon"
+            android:title="Log out" />
+    </group>
+
+
+
+</menu>
