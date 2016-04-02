@@ -59,7 +59,7 @@ public class login extends AppCompatActivity {
                 mlogin_passwd = password.getText().toString();
                 //t = (TextView)findViewById(R.id.testview);
                // t.setText(mlogin_name);
-                Intent intent = new Intent(context, sellerHome.class);
+                Intent intent = new Intent(context, sellerOptions.class);
                 intent.putExtra(LOGIN_NAME, mlogin_name);
                 intent.putExtra(LOGIN_PASSWD, mlogin_passwd);
                 Log.i("ootg", mlogin_name + ":" + mlogin_passwd);

@@ -17,11 +17,10 @@
 
 
     </string-array>
-    <string name="title_activity_seller_home">Seller Home</string>
     <string name="title_activity_search__result">Search Result</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_product_details">product_details</string>
-    <string name="large_text">
+       <string name="large_text">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -111,4 +110,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_product__details">product_Details</string>
+    <string name="title_activity_seller_options">sellerOptions</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
