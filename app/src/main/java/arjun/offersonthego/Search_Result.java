@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,35 +15,119 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 
 public class Search_Result extends AppCompatActivity {
     Context context;
     public static String SEARCH_PHP_SCRIPT = "http://offersonthego.16mb.com/API/api.products.php?";
+    public static String GOOGLE_DIRECTION_MATRIX = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     public static String SEARCH_TERM = "";
     public static String SEARCH_CATEGORY = "";
-    public static String CURRENT_LAT = "";
-    public static String CURRENT_LONG = "";
+    public static boolean response_Ready = false;
     public ProgressDialog mprogressDialoggps;
+    public ArrayList<Search_Results_Model> response_result_model_to_adapters;
+    public searchtask tasks;
+    public static ArrayList<Search_Results_Model> stored_search_results;
+    public ArrayList<Search_Results_Model> arraylist;
+    public double CURRENT_LAT;
+    public double CURRENT_LONG;
+
+    public void update_Locations() {
+
+
+        //building url
+        String url;
+        url = GOOGLE_DIRECTION_MATRIX + "origins=" + CURRENT_LAT + "," + CURRENT_LONG + "&destinations=";
+        for (int i = 0; i < stored_search_results.size(); i++) {
+            if (i != 0) {
+                url = url + "|";
+
+            }
+
+            url = url + stored_search_results.get(i).shop_lat + "," + stored_search_results.get(i).shop_lngi;
+
+
+        }
+        url = url + "&key=AIzaSyBRJy24wykvkl_uwBVen2uLdvBfbx97gLI";
+        Log.i("ootg", url);
+
+        common_net_task common_net_task = new common_net_task(new common_net_task_Runnnable() {
+
+            String response;
+
+            @Override
+            public void run() {
+                ListView lv_serach_Res = (ListView) findViewById(R.id.lv_search_results);
+                Search_ItemsAdapter adap = (Search_ItemsAdapter) lv_serach_Res.getAdapter();
+
+                //  stored_search_results --> response_Result_model_to_adapters-->arraylist(adapter)-->adapter
+//copy of task_stored response_response
+                response_result_model_to_adapters = stored_search_results;
+
+                try {
+                    JSONArray distance_elements = new JSONObject(response).getJSONArray("rows").getJSONObject(0).getJSONArray("elements");
+                    for (int i = 0; i < stored_search_results.size(); i++) {
+                        Search_Results_Model s = response_result_model_to_adapters.get(i);
+                        JSONObject jobj = distance_elements.getJSONObject(i);
+                        Log.i("ootg", jobj.toString());
+                        if (jobj.getString("status") != "ZERO_RESULTS" && jobj.has("distance")) {
+                            s.Distance = jobj.getJSONObject("distance").getString("text");
+                            s.valid_distance=true;
+                            // s.Distance = jobj.getString("distance");
+s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
+                        } else {
+                            s.valid_distance=true;
+                            s.Distance = "";
+                            s.distanceinm=9999999;
+                        }
+
+                        response_result_model_to_adapters.set(i, s);
+
+                    }
+                    arraylist = response_result_model_to_adapters;
+                    adap.clear();
+
+                    adap.addAll(arraylist);
+                    adap.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+
+                }
+
+            }
+
+            @Override
+            public void init(String str) {
+                response = str;
+                Log.i("ootg", str);
+            }
+        }, url);
+        common_net_task.execute();
+
+
+    }
 
     public void registerGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
-                Toast.makeText(context, String.valueOf(location.getLatitude()), Toast.LENGTH_LONG).show();
+                // Called when a new location is found by the GPS location provider.
+                CURRENT_LAT = location.getLatitude();
+                CURRENT_LONG = location.getLongitude();
+
+
+                if (!Search_Result.response_Ready) {
+                    return;
+                }
+                update_Locations();
 
             }
 
@@ -57,7 +140,7 @@ public class Search_Result extends AppCompatActivity {
             public void onProviderDisabled(String provider) {
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200, 5, locationListener);
     }
 
     private double[] getGPS() {
@@ -93,7 +176,7 @@ public class Search_Result extends AppCompatActivity {
         SEARCH_TERM = searchterm;
         SEARCH_CATEGORY = searchcat;
 // connecting to listview by adapter
-        ArrayList<Search_Results_Model> arraylist = new ArrayList<Search_Results_Model>();
+        arraylist = new ArrayList<Search_Results_Model>();
         Search_ItemsAdapter search_itemsAdapter = new Search_ItemsAdapter(this, arraylist);
         ListView lvsresults = (ListView) findViewById(R.id.lv_search_results);
         lvsresults.setAdapter(search_itemsAdapter);
@@ -105,24 +188,15 @@ public class Search_Result extends AppCompatActivity {
 
             }
         });
-        //getting gps
 
-        mprogressDialoggps = ProgressDialog.show(context, "Please Wait", "Locating the device");
 
-// retrieving gps
-        double locs[] = getGPS();
-        if (locs[0] != -1) {
-            Search_Result.CURRENT_LAT = String.valueOf(locs[0]);
-            Search_Result.CURRENT_LONG = String.valueOf(locs[1]);
-        } else {
-            Search_Result.CURRENT_LAT = "-1";
-            Search_Result.CURRENT_LONG = "-1";
-        }
-
-        //Thread.sleep(2000);
-        mprogressDialoggps.dismiss();
         //new thread for async network task
-        searchtask tasks = new searchtask(findViewById(android.R.id.content), context);
+        tasks = new searchtask(findViewById(android.R.id.content), context, new Runnable() {
+            @Override
+            public void run() {
+                update_Locations();
+            }
+        });
         tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&lat=" + CURRENT_LAT + "&long=" + CURRENT_LONG);
 
     }
@@ -139,7 +213,12 @@ public class Search_Result extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.filter_icon:
-                Filter_list_dialog filter_list_dialog = new Filter_list_dialog(context, findViewById(android.R.id.content));
+                Filter_list_dialog filter_list_dialog = new Filter_list_dialog(context, findViewById(android.R.id.content), new Runnable() {
+                    @Override
+                    public void run() {
+                        update_Locations();
+                    }
+                });
                 filter_list_dialog.show(getFragmentManager(), "FILTER");
 
         }

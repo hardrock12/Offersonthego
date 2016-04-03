@@ -15,11 +15,12 @@ import android.widget.Toast;
 public class category_list_dialog extends DialogFragment {
     public Context mcontext;
     public View mrootview;
+public Runnable u;
 
-
-    category_list_dialog(Context context, View rootview) {
+    category_list_dialog(Context context, View rootview,Runnable u) {
         mcontext = context;
         mrootview = rootview;
+        this.u=u;
     }
 
     @Override
@@ -30,8 +31,8 @@ public class category_list_dialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String categories[] = getResources().getStringArray(R.array.categoryofproducts);
-                searchtask phpquery = new searchtask(mrootview, mcontext);
-                phpquery.execute(Search_Result.SEARCH_PHP_SCRIPT + "searchterm=" + Search_Result.SEARCH_TERM + "&searchcategory=" + categories[which] + "&lat=" + Search_Result.CURRENT_LAT + "&long=" + Search_Result.CURRENT_LONG);
+                searchtask phpquery = new searchtask(mrootview, mcontext,u);
+                phpquery.execute(Search_Result.SEARCH_PHP_SCRIPT + "searchterm=" + Search_Result.SEARCH_TERM + "&searchcategory=" + categories[which]);
 
                 dialog.dismiss();
 

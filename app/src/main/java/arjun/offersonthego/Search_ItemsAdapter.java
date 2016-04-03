@@ -31,12 +31,21 @@ public class Search_ItemsAdapter extends ArrayAdapter<Search_Results_Model> {
         TextView description = (TextView) convertView.findViewById(R.id.lv_description);
         TextView cost = (TextView) convertView.findViewById(R.id.lv_price);
         TextView distancetoshop = (TextView) convertView.findViewById(R.id.navigation_distance);
+        TextView tvshopname=(TextView)convertView.findViewById(R.id.tv_shop_name);
         pname.setText(result_item.product_name);
         description.setText(result_item.description);
         cost.setText("\u20B9 " + result_item.price);
-        if (result_item.distance != null) {
+      /*  if (result_item.distance != null) {
             distancetoshop.setText(result_item.distance + " m");
+        }*/
+        if(result_item.Distance==null||result_item.valid_distance==false) {
+            distancetoshop.setText("calculating..");
         }
+        else{
+            distancetoshop.setText(result_item.Distance);
+
+        }
+        tvshopname.setText(result_item.shop_name);
         return convertView;
     }
 }

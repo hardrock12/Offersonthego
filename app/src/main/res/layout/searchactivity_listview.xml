@@ -51,9 +51,19 @@
         android:text="500 m"
         android:textColor="#29a83e"
         android:textSize="17sp"
+        android:textStyle="bold"
         android:layout_below="@+id/lv_description"
         android:layout_alignLeft="@+id/lv_price"
         android:layout_alignStart="@+id/lv_price"
-        android:textStyle="bold" />
+        android:layout_marginTop="26dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="shopname"
+        android:id="@+id/tv_shop_name"
+        android:layout_alignTop="@+id/navigation_distance"
+        android:layout_toRightOf="@+id/lv_pname"
+        android:layout_toEndOf="@+id/lv_pname" />
 
 </RelativeLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+       android:background="#3E80B4">
+
+        <TextView
+            android:id="@+id/txt_dia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="select range of price:"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:layout_marginBottom="35dp"
+            android:layout_above="@+id/textView7"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Between Rs"
+            android:id="@+id/textView7"
+            android:layout_above="@+id/from_price"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AND Rs "
+            android:id="@+id/textView5"
+            android:layout_above="@+id/toprice"
+            android:layout_alignRight="@+id/textView7"
+            android:layout_alignEnd="@+id/textView7" />
+
+        <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+
+
+            android:id="@+id/toprice"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/tverrr"
+            android:layout_alignStart="@+id/tverrr" />
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+
+
+            android:id="@+id/from_price"
+            android:layout_above="@+id/toprice"
+            android:layout_alignLeft="@+id/btn_yes"
+            android:layout_alignStart="@+id/btn_yes"
+            android:layout_marginBottom="39dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_below="@+id/from_price"
+            android:layout_alignLeft="@+id/btn_yes"
+            android:layout_alignStart="@+id/btn_yes"
+            android:layout_toStartOf="@+id/textView5"
+            android:id="@+id/tverrr" />
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="Filter"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/tverrr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp" />
+    </RelativeLayout>
+
