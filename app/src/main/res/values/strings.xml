@@ -110,8 +110,9 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_product__details">product_Details</string>
-    <string name="title_activity_seller_options">sellerOptions</string>
+    <string name="title_activity_seller_options">Seller Home</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_add_product">Add Product</string>
 </resources>

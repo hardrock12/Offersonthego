@@ -48,8 +48,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="arjun.offersonthego.MainActivity" />
         </activity>
-
-               <activity
+        <activity
             android:name=".sellerOptions"
             android:label="@string/title_activity_seller_options"
             android:parentActivityName=".login"
@@ -57,6 +56,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="arjun.offersonthego.login" />
+        </activity>
+        <activity
+            android:name=".addProduct"
+            android:label="@string/title_activity_add_product"
+            android:parentActivityName=".sellerOptions"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="arjun.offersonthego.sellerOptions" />
         </activity>
     </application>
 

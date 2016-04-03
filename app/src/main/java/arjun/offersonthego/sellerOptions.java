@@ -2,10 +2,13 @@ package arjun.offersonthego;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +40,8 @@ public class sellerOptions extends AppCompatActivity
    // public static String LOGIN_PHP_SCRIPT = "http://offersonthego.16mb.com/API/loginapi.php?";
     public static String LOGIN_NAMES = "";
     public static String LOGIN_PASSWDS = "";
-    // public TextView v;
+    SharedPreferences shopIdentifier;
+
     public String id;
 
     @Override
@@ -49,6 +54,10 @@ public class sellerOptions extends AppCompatActivity
         context = this;
         Intent intent = getIntent();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String log1 = (sharedPreferences.getString("user", ""));
+        String pwd1 = (sharedPreferences.getString("passwd",""));
+
         String loginname = intent.getStringExtra(login.LOGIN_NAME);
         String loginpasswd = intent.getStringExtra(login.LOGIN_PASSWD);
         LOGIN_NAMES = loginname;
@@ -57,8 +66,17 @@ public class sellerOptions extends AppCompatActivity
 
 
         LoginSellerTask tasks = new LoginSellerTask(findViewById(android.R.id.content),this);
-        Log.i("ootg","http://offersonthego.16mb.com/API/sellerHomeApi.php?usr=" + loginname + "&pwd=" + loginpasswd);
-        tasks.execute("http://offersonthego.16mb.com/API/sellerHomeApi.php?usr=" + loginname + "&pwd=" + loginpasswd);
+       // Log.i("ootg","http://offersonthego.16mb.com/API/sellerHomeApi.php?usr=" + loginname + "&pwd=" + loginpasswd);
+        //tasks.execute("http://offersonthego.16mb.com/API/sellerHomeApi.php?usr=" + loginname + "&pwd=" + loginpasswd);
+
+        Log.i("ootg", "http://offersonthego.16mb.com/API/sellerHomeApi.php?usr=" + log1 + "&pwd=" + pwd1);
+        tasks.execute("http://offersonthego.16mb.com/API/sellerHomeApi.php?usr=" + log1 + "&pwd=" + pwd1);
+
+
+
+
+        shopIdentifier = getSharedPreferences("shopData", Context.MODE_PRIVATE);
+
 
 
 
@@ -71,6 +89,33 @@ public class sellerOptions extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+
+      final TextView shopi=(TextView)findViewById(R.id.shop_id);
+        shopi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                SharedPreferences.Editor value = shopIdentifier.edit();
+
+                value.putString("shopIdentifier", shopi.getText().toString());
+                value.commit();
+
+            }
+        });
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -121,6 +166,9 @@ public class sellerOptions extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.add_product) {
+
+            Intent intent=new Intent(context,addProduct.class);
+            context.startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.update_product) {
 
@@ -150,6 +198,7 @@ class LoginSellerTask extends AsyncTask<String, Void, String> {
 
     private Context context;
 
+
     LoginSellerTask(View rootview, Context context) {
         this.rv = rootview;
         this.context = context;
@@ -171,6 +220,10 @@ class LoginSellerTask extends AsyncTask<String, Void, String> {
                 context.startActivity(intent);
                 return;
             }
+
+
+
+
             JSONObject object1 = jsonArray.getJSONObject(1);
             JSONObject object2 = jsonArray.getJSONObject(2);
             JSONObject object3 = jsonArray.getJSONObject(3);
@@ -197,7 +250,7 @@ class LoginSellerTask extends AsyncTask<String, Void, String> {
             sh_seller.setText(object3.getString("name"));
             sh_type.setText(object3.getString("shop_type"));
 
-
+            //shop_iden = sh_id.getText().toString();
 
 
         } catch (JSONException e) {

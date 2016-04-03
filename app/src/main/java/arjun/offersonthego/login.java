@@ -2,6 +2,7 @@ package arjun.offersonthego;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ public class login extends AppCompatActivity {
 
     public final  static  String LOGIN_NAME="arjun.login.NAME";
     public final  static  String LOGIN_PASSWD="arjun.login.PASSWD";
+    SharedPreferences sharedpreferences;
 
     Context context;
     public String mlogin_name="";
@@ -57,6 +59,13 @@ public class login extends AppCompatActivity {
 
                 mlogin_name = username.getText().toString();
                 mlogin_passwd = password.getText().toString();
+
+                sharedpreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                editor.putString("user", mlogin_name);
+                editor.putString("passwd",mlogin_passwd);
+                editor.commit();
                 //t = (TextView)findViewById(R.id.testview);
                // t.setText(mlogin_name);
                 Intent intent = new Intent(context, sellerOptions.class);
