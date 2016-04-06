@@ -173,6 +173,7 @@ s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
         registerGPS();
         String searchterm = intent.getStringExtra(MainActivity.SEARCH_TERM);
         String searchcat = intent.getStringExtra(MainActivity.SEARCH_CATEGORY);
+        String searchregion=intent.getStringExtra(MainActivity.SEARCH_REGION);
         SEARCH_TERM = searchterm;
         SEARCH_CATEGORY = searchcat;
 // connecting to listview by adapter
@@ -197,7 +198,7 @@ s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
                 update_Locations();
             }
         });
-        tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&lat=" + CURRENT_LAT + "&long=" + CURRENT_LONG);
+        tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&searchregion="+searchregion);
 
     }
 

@@ -3,17 +3,9 @@
     <string name="action_settings">Settings</string>
     <string-array name="categoryofproducts">
 
-        <item>Electronics</item>
-        <item>Groceries</item>
-        <item>Home and Furniture</item>
-        <item>Clothing</item>
-        <item>Home and Furniture</item>
-        <item>Sports</item>
-        <item>Food</item>
-        <item>Electrical</item>
-        <item>Books and Media</item>
-        <item>Pharmacy</item>
-        <item>Other</item>
+        <item>Nearby</item>
+        <item>Select Region</item>
+
 
 
     </string-array>
