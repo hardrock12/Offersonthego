@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,22 +25,52 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import javax.sql.ConnectionPoolDataSource;
+
 
 public class Search_Result extends AppCompatActivity {
-    Context context;
     public static String SEARCH_PHP_SCRIPT = "http://offersonthego.16mb.com/API/api.products.php?";
     public static String GOOGLE_DIRECTION_MATRIX = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     public static String SEARCH_TERM = "";
     public static String SEARCH_CATEGORY = "";
+    public static String SEARCH_REGION = "Nearby";
     public static boolean response_Ready = false;
+    public static ArrayList<Search_Results_Model> stored_search_results;
     public ProgressDialog mprogressDialoggps;
     public ArrayList<Search_Results_Model> response_result_model_to_adapters;
     public searchtask tasks;
-    public static ArrayList<Search_Results_Model> stored_search_results;
     public ArrayList<Search_Results_Model> arraylist;
     public double CURRENT_LAT;
     public double CURRENT_LONG;
+    public Search_Results_Model model_for_loading_image;
+    public Search_ItemsAdapter search_itemsAdapter;
+    Context context;
 
+    public void load_Images() {
+        for (int i = 0; i < arraylist.size(); i++) {
+            model_for_loading_image = arraylist.get(i);
+
+            async_image_loading image_loading = new async_image_loading(new async_response_bitmap() {
+                @Override
+                public void Processbitmap(Bitmap b, int i) {
+                    //model_for_loading_image.thumb=b;
+                    Search_Results_Model s = arraylist.get(i);
+                    s.thumb = b;
+                    arraylist.set(i, s);
+                    search_itemsAdapter.notifyDataSetChanged();
+
+                }
+            }, i);
+            try {
+                image_loading.execute(model_for_loading_image.sourc.getString("product_image"));
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+
+
+    }
     public void update_Locations() {
 
 
@@ -77,19 +109,38 @@ public class Search_Result extends AppCompatActivity {
                         Search_Results_Model s = response_result_model_to_adapters.get(i);
                         JSONObject jobj = distance_elements.getJSONObject(i);
                         Log.i("ootg", jobj.toString());
-                        if (jobj.getString("status") != "ZERO_RESULTS" && jobj.has("distance")) {
+                        if (!(jobj.getString("status").equals("ZERO_RESULTS")) && jobj.has("distance")) {
                             s.Distance = jobj.getJSONObject("distance").getString("text");
-                            s.valid_distance=true;
+                            s.valid_distance = true;
                             // s.Distance = jobj.getString("distance");
-s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
+                            s.distanceinm = jobj.getJSONObject("distance").getDouble("value");
                         } else {
-                            s.valid_distance=true;
+                            s.valid_distance = true;
                             s.Distance = "";
-                            s.distanceinm=9999999;
+                            s.distanceinm = 9999999;
                         }
 
                         response_result_model_to_adapters.set(i, s);
 
+                    }
+
+                    if (SEARCH_REGION.equals("Nearby")) {
+                        Log.i("ootg", SEARCH_REGION);
+                        for (int i = 0; i < response_result_model_to_adapters.size(); i++) {
+                            int min = i;
+                            Search_Results_Model temp;
+                            for (int j = i + 1; j < response_result_model_to_adapters.size(); j++) {
+                                if (response_result_model_to_adapters.get(min).distanceinm > response_result_model_to_adapters.get(j).distanceinm) {
+                                    min = j;
+
+                                }
+
+                            }
+
+                            temp = response_result_model_to_adapters.get(i);
+                            response_result_model_to_adapters.set(i, response_result_model_to_adapters.get(min));
+                            response_result_model_to_adapters.set(min, temp);
+                        }
                     }
                     arraylist = response_result_model_to_adapters;
                     adap.clear();
@@ -175,19 +226,20 @@ s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
         registerGPS();
         String searchterm = intent.getStringExtra(MainActivity.SEARCH_TERM);
         String searchcat = intent.getStringExtra(MainActivity.SEARCH_CATEGORY);
-        String searchregion=intent.getStringExtra(MainActivity.SEARCH_REGION);
+        String searchregion = intent.getStringExtra(MainActivity.SEARCH_REGION);
         SEARCH_TERM = searchterm;
         SEARCH_CATEGORY = searchcat;
+        SEARCH_REGION = searchregion;
 // connecting to listview by adapter
         arraylist = new ArrayList<Search_Results_Model>();
-        Search_ItemsAdapter search_itemsAdapter = new Search_ItemsAdapter(this, arraylist);
+        search_itemsAdapter = new Search_ItemsAdapter(this, arraylist);
         ListView lvsresults = (ListView) findViewById(R.id.lv_search_results);
         lvsresults.setAdapter(search_itemsAdapter);
 // setting on click listener for Listview
         lvsresults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Toast.makeText(context, arraylist.get(position).shopid + arraylist.get(position).productid, Toast.LENGTH_LONG).show();
 
             }
         });
@@ -198,9 +250,12 @@ s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
             @Override
             public void run() {
                 update_Locations();
+
+                arraylist = stored_search_results;
+                load_Images();
             }
         });
-        tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&searchregion="+searchregion);
+        tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&searchregion=" + searchregion);
 
     }
 

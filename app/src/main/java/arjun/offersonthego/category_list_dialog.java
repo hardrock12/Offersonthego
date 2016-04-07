@@ -27,10 +27,11 @@ public Runnable u;
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder nbuilder = new AlertDialog.Builder(getActivity());
         // CharSequence filters[] = {"by category", "by region", "by "};
-        nbuilder.setTitle("Choose Category Filter:").setSingleChoiceItems(R.array.categoryofproducts, -1, new DialogInterface.OnClickListener() {
+
+        nbuilder.setTitle("Choose Category Filter:").setSingleChoiceItems(R.array.categoryofproducts1, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String categories[] = getResources().getStringArray(R.array.categoryofproducts);
+                String categories[] = getResources().getStringArray(R.array.categoryofproducts1);
                 searchtask phpquery = new searchtask(mrootview, mcontext,u);
                 phpquery.execute(Search_Result.SEARCH_PHP_SCRIPT + "searchterm=" + Search_Result.SEARCH_TERM + "&searchcategory=" + categories[which]);
 

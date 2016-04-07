@@ -5,20 +5,26 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-
-        />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/thumbnail"
+        android:layout_alignTop="@+id/lv_description"
+        android:layout_alignLeft="@+id/lv_pname"
+        android:layout_alignStart="@+id/lv_pname"
+        android:layout_x="11dp"
+        android:layout_y="30dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="product name"
         android:id="@+id/lv_pname"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_x="14dp"
+        android:layout_y="0dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,15 +40,27 @@
         android:layout_above="@+id/lv_description"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:password="false" />
+        android:password="false"
+        android:textIsSelectable="false"
+        android:textSize="14sp"
+        android:layout_x="250dp"
+        android:layout_y="40dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="description"
         android:id="@+id/lv_description"
+        android:textStyle="italic"
+        android:textSize="13sp"
         android:layout_below="@+id/lv_pname"
-        android:layout_centerHorizontal="true" />
+        android:layout_x="115dp"
+        android:layout_y="39dp"
+        android:maxHeight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/tv_shop_name"
+        android:layout_alignStart="@+id/tv_shop_name" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,20 +68,27 @@
         android:id="@+id/navigation_distance"
         android:text="500 m"
         android:textColor="#29a83e"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@+id/lv_description"
         android:layout_alignLeft="@+id/lv_price"
         android:layout_alignStart="@+id/lv_price"
-        android:layout_marginTop="26dp" />
+        android:layout_marginTop="26dp"
+        android:layout_x="252dp"
+        android:layout_y="70dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="shopname"
         android:id="@+id/tv_shop_name"
-        android:layout_alignTop="@+id/navigation_distance"
-        android:layout_toRightOf="@+id/lv_pname"
-        android:layout_toEndOf="@+id/lv_pname" />
+        android:textSize="15dp"
+        android:layout_x="122dp"
+        android:layout_y="79dp"
+        android:layout_below="@+id/navigation_distance"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp" />
 
 </RelativeLayout>

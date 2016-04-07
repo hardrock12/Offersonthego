@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                TextView s = (TextView) parent.getSelectedView();
+                                TextView s = (TextView) view;
                                 mregion_term = s.getText().toString();
 region_dialog.dismiss();
                             }

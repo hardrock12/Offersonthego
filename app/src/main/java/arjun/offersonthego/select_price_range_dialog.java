@@ -98,13 +98,13 @@ public class select_price_range_dialog extends Dialog implements
                     temp = elements.get(i);
                     elements.set(i, elements.get(min));
                     elements.set(min, temp);
-
+                }
 
                     adapter1.clear();
                     adapter1.addAll(elements);
                     adapter1.notifyDataSetChanged();
 
-                }
+
                 dismiss();
         }
     }

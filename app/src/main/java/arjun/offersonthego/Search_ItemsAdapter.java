@@ -1,10 +1,12 @@
 package arjun.offersonthego;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -32,6 +34,7 @@ public class Search_ItemsAdapter extends ArrayAdapter<Search_Results_Model> {
         TextView cost = (TextView) convertView.findViewById(R.id.lv_price);
         TextView distancetoshop = (TextView) convertView.findViewById(R.id.navigation_distance);
         TextView tvshopname=(TextView)convertView.findViewById(R.id.tv_shop_name);
+        ImageView imgthum = (ImageView) convertView.findViewById(R.id.thumbnail);
         pname.setText(result_item.product_name);
         description.setText(result_item.description);
         cost.setText("\u20B9 " + result_item.price);
@@ -46,6 +49,10 @@ public class Search_ItemsAdapter extends ArrayAdapter<Search_Results_Model> {
 
         }
         tvshopname.setText(result_item.shop_name);
+        if (result_item.thumb != null) {
+            imgthum.setImageBitmap(result_item.thumb);
+        }
+
         return convertView;
     }
 }

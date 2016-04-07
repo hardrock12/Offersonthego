@@ -1,5 +1,7 @@
 package arjun.offersonthego;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +26,13 @@ class Search_Results_Model {
 public boolean valid_distance=false;
     public double distanceinm=0;
     public double priceinrs=0;
+    public Bitmap thumb;
+    public JSONObject sourc;
+
     public static Search_Results_Model fromJson(JSONObject jsonObject) {
         Search_Results_Model model = new Search_Results_Model();
         try {
-
+            model.sourc = jsonObject;
             model.product_name = jsonObject.getString("product_name");
             model.category = jsonObject.getString("catgory");
             model.productid = jsonObject.getString("product_id");
@@ -47,6 +52,7 @@ public boolean valid_distance=false;
                 model.shop_lat = "";
             }
             model.shop_name = jsonObject.getString("shop_name");
+            model.thumb = null;
         } catch (JSONException e) {
             e.printStackTrace();
         }
