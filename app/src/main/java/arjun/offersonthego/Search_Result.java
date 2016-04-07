@@ -1,5 +1,6 @@
 package arjun.offersonthego;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -140,6 +141,7 @@ s.distanceinm=jobj.getJSONObject("distance").getDouble("value");
             public void onProviderDisabled(String provider) {
             }
         };
+      //  if(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200, 5, locationListener);
     }
 

@@ -28,7 +28,7 @@ public boolean valid_distance=false;
         Search_Results_Model model = new Search_Results_Model();
         try {
 
-            model.product_name = jsonObject.getString("Product_name");
+            model.product_name = jsonObject.getString("product_name");
             model.category = jsonObject.getString("catgory");
             model.productid = jsonObject.getString("product_id");
             model.shopid = jsonObject.getString("shopid");

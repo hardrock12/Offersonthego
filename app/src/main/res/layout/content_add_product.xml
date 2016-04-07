@@ -31,22 +31,138 @@
         android:layout_toEndOf="@+id/textView5" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="400px"
         android:layout_height="wrap_content"
-        android:id="@+id/value"
-        android:layout_below="@+id/textView5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp"
-        android:layout_alignRight="@+id/identifier"
-        android:layout_alignEnd="@+id/identifier" />
+        android:id="@+id/P_id"
+        android:layout_below="@+id/identifier"
+        android:layout_alignLeft="@+id/sendVal"
+        android:layout_alignStart="@+id/sendVal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="send Value"
+        android:text="Add Product"
         android:id="@+id/sendVal"
-        android:layout_below="@+id/value"
+        android:layout_below="@+id/P_avail"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product ID :"
+        android:id="@+id/textView7"
+        android:layout_alignBottom="@+id/P_id"
+        android:layout_alignRight="@+id/textView8"
+        android:layout_alignEnd="@+id/textView8" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Name :"
+        android:id="@+id/textView8"
+        android:layout_below="@+id/P_id"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
+
+    <EditText
+        android:layout_width="400px"
+        android:layout_height="wrap_content"
+        android:id="@+id/P_name"
+        android:layout_below="@+id/P_id"
+        android:layout_alignLeft="@+id/P_id"
+        android:layout_alignStart="@+id/P_id" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description :"
+        android:id="@+id/textView9"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/P_name"
+        android:layout_alignRight="@+id/textView8"
+        android:layout_alignEnd="@+id/textView8" />
+
+    <EditText
+        android:layout_width="400px"
+        android:layout_height="wrap_content"
+        android:id="@+id/P_desc"
+        android:layout_alignBottom="@+id/textView9"
+        android:layout_alignLeft="@+id/P_name"
+        android:layout_alignStart="@+id/P_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price :"
+        android:id="@+id/textView10"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignRight="@+id/textView9"
+        android:layout_alignEnd="@+id/textView9" />
+
+    <EditText
+        android:layout_width="400px"
+        android:layout_height="wrap_content"
+        android:id="@+id/P_price"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignLeft="@+id/P_desc"
+        android:layout_alignStart="@+id/P_desc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type :"
+        android:id="@+id/textView11"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView10"
+        android:layout_alignRight="@+id/textView7"
+        android:layout_alignEnd="@+id/textView7" />
+
+    <EditText
+        android:layout_width="400px"
+        android:layout_height="wrap_content"
+        android:id="@+id/P_type"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_alignLeft="@+id/P_price"
+        android:layout_alignStart="@+id/P_price" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category :"
+        android:id="@+id/textView12"
+        android:layout_alignTop="@+id/P_category"
+        android:layout_alignRight="@+id/textView13"
+        android:layout_alignEnd="@+id/textView13" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/P_category"
+        android:entries="@array/categoryofproducts1"
+        android:layout_below="@+id/P_type"
+        android:layout_alignLeft="@+id/P_avail"
+        android:layout_alignStart="@+id/P_avail"
+        android:layout_marginTop="27dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Availability :"
+        android:id="@+id/textView13"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/P_category"
+        android:layout_alignLeft="@+id/textView7"
+        android:layout_alignStart="@+id/textView7" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/P_avail"
+        android:entries="@array/availabilityofproducts"
+        android:layout_alignBaseline="@+id/textView13"
+        android:layout_alignBottom="@+id/textView13"
+        android:layout_alignLeft="@+id/sendVal"
+        android:layout_alignStart="@+id/sendVal" />
 </RelativeLayout>

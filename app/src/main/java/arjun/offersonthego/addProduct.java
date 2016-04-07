@@ -49,36 +49,56 @@ public class addProduct extends AppCompatActivity {
 
 
         send = (Button)findViewById(R.id.sendVal);
-        text =(EditText)findViewById(R.id.value);
+        text =(EditText)findViewById(R.id.P_id);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String  msg = text.getText().toString();
+                // String  msg = text.getText().toString();
 
+                final String msg1 = text.getText().toString();
 
-                //check whether the msg empty or not
-                if(msg.length()>0) {
-                    HttpClient httpclient = new DefaultHttpClient();
-                    HttpPost httppost = new HttpPost("http://10.0.2.2/mini/API/addTest.php");
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    try {
-                        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                        nameValuePairs.add(new BasicNameValuePair("id", "01"));
-                        nameValuePairs.add(new BasicNameValuePair("data", msg));
-                        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                        httpclient.execute(httppost);
-                        text.setText(""); //reset the message text field
-                        Toast.makeText(getBaseContext(),"Sent",Toast.LENGTH_SHORT).show();
-                    } catch (ClientProtocolException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        String msg = msg1;
+
+                        if (msg.length() > 0) {
+                            HttpClient httpclient = new DefaultHttpClient();
+                            HttpPost httppost = new HttpPost("http://10.0.3.2/mini/API/addTest.php");
+
+                            try {
+                                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                                nameValuePairs.add(new BasicNameValuePair("id", "01"));
+                                nameValuePairs.add(new BasicNameValuePair("message", msg));
+                                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                                httpclient.execute(httppost);
+                                //text.setText(""); //reset the message text field
+                                //Toast.makeText(getBaseContext(), "Sent", Toast.LENGTH_SHORT).show();
+                            } catch (ClientProtocolException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                           /* catch(Exception e)
+                            {
+                               e.printStackTrace();
+                            }
+                            */
+                        }
+                        //
                     }
-                } else {
+                });
+
+                t.start();
+
+                text.setText("*");
+
+
                     //display message if text field is empty
-                    Toast.makeText(getBaseContext(),"All fields are required",Toast.LENGTH_SHORT).show();
-                }
+                    //Toast.makeText(getBaseContext(),"All fields are required",Toast.LENGTH_SHORT).show();
+
             }
         });
 
