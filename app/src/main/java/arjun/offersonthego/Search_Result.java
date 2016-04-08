@@ -23,7 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.ConnectionPoolDataSource;
 
@@ -34,6 +36,8 @@ public class Search_Result extends AppCompatActivity {
     public static String SEARCH_TERM = "";
     public static String SEARCH_CATEGORY = "";
     public static String SEARCH_REGION = "Nearby";
+    public static String SEARCH_SHOP_ID="arjun.offersonthego.productdetails.shopid";
+    public static String SEARCH_PRODUCT_ID="arjun.offersonthego.productdetails.productid";
     public static boolean response_Ready = false;
     public static ArrayList<Search_Results_Model> stored_search_results;
     public ProgressDialog mprogressDialoggps;
@@ -45,6 +49,28 @@ public class Search_Result extends AppCompatActivity {
     public Search_Results_Model model_for_loading_image;
     public Search_ItemsAdapter search_itemsAdapter;
     Context context;
+public ArrayList<Search_Results_Model> Nearby(ArrayList<Search_Results_Model> arr)
+{
+
+    Log.i("ootg", SEARCH_REGION);
+    for (int i = 0; i < arr.size(); i++) {
+        int min = i;
+        Search_Results_Model temp;
+        for (int j = i + 1; j < arr.size(); j++) {
+            if (arr.get(min).distanceinm > arr.get(j).distanceinm) {
+                min = j;
+
+            }
+
+        }
+
+        temp = arr.get(i);
+        arr.set(i, arr.get(min));
+        arr.set(min, temp);
+    }
+
+return arr;
+}
 
     public void load_Images() {
         for (int i = 0; i < arraylist.size(); i++) {
@@ -69,7 +95,7 @@ public class Search_Result extends AppCompatActivity {
             }
         }
 
-
+        update_Locations();
     }
     public void update_Locations() {
 
@@ -125,22 +151,7 @@ public class Search_Result extends AppCompatActivity {
                     }
 
                     if (SEARCH_REGION.equals("Nearby")) {
-                        Log.i("ootg", SEARCH_REGION);
-                        for (int i = 0; i < response_result_model_to_adapters.size(); i++) {
-                            int min = i;
-                            Search_Results_Model temp;
-                            for (int j = i + 1; j < response_result_model_to_adapters.size(); j++) {
-                                if (response_result_model_to_adapters.get(min).distanceinm > response_result_model_to_adapters.get(j).distanceinm) {
-                                    min = j;
-
-                                }
-
-                            }
-
-                            temp = response_result_model_to_adapters.get(i);
-                            response_result_model_to_adapters.set(i, response_result_model_to_adapters.get(min));
-                            response_result_model_to_adapters.set(min, temp);
-                        }
+response_result_model_to_adapters=Nearby(response_result_model_to_adapters);
                     }
                     arraylist = response_result_model_to_adapters;
                     adap.clear();
@@ -221,7 +232,7 @@ public class Search_Result extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = this;
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         registerGPS();
         String searchterm = intent.getStringExtra(MainActivity.SEARCH_TERM);
@@ -239,7 +250,10 @@ public class Search_Result extends AppCompatActivity {
         lvsresults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, arraylist.get(position).shopid + arraylist.get(position).productid, Toast.LENGTH_LONG).show();
+             Intent inte=new Intent(context,product_Details.class);
+                inte.putExtra(SEARCH_SHOP_ID,arraylist.get(position).shopid);
+                inte.putExtra(SEARCH_PRODUCT_ID,arraylist.get(position).productid);
+                startActivity(inte);
 
             }
         });
@@ -249,10 +263,12 @@ public class Search_Result extends AppCompatActivity {
         tasks = new searchtask(findViewById(android.R.id.content), context, new Runnable() {
             @Override
             public void run() {
-                update_Locations();
-
                 arraylist = stored_search_results;
                 load_Images();
+
+
+
+
             }
         });
         tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat + "&searchregion=" + searchregion);
@@ -274,7 +290,8 @@ public class Search_Result extends AppCompatActivity {
                 Filter_list_dialog filter_list_dialog = new Filter_list_dialog(context, findViewById(android.R.id.content), new Runnable() {
                     @Override
                     public void run() {
-                        update_Locations();
+                        arraylist=stored_search_results;
+                        load_Images();
                     }
                 });
                 filter_list_dialog.show(getFragmentManager(), "FILTER");

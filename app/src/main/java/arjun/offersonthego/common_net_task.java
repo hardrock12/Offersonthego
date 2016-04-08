@@ -1,6 +1,7 @@
 package arjun.offersonthego;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class common_net_task extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        Log.i("ootg", "commonnettask:fetched ==>" + response);
         return response;
 
     }

@@ -117,18 +117,18 @@
 
 
         android:layout_below="@+id/tx_sold_by"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignLeft="@+id/call_button"
+        android:layout_alignStart="@+id/call_button" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact us "
 
-        android:layout_alignBottom="@+id/button"
+        android:layout_alignBottom="@+id/call_button"
         android:layout_alignLeft="@+id/tx_sold_by"
         android:layout_alignStart="@+id/tx_sold_by"
-        android:id="@+id/textView4" />
+        android:id="@+id/txt_contactus" />
 
     <Button
         android:layout_width="wrap_content"
@@ -138,15 +138,15 @@
         android:layout_toRightOf="@+id/tx_Rate_this_product"
         android:layout_toEndOf="@+id/tx_Rate_this_product"
         android:layout_marginTop="41dp"
-        android:id="@+id/button" />
+        android:id="@+id/call_button" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Navigate To"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
+        android:layout_below="@+id/call_button"
+        android:layout_alignLeft="@+id/call_button"
+        android:layout_alignStart="@+id/call_button"
         android:id="@+id/button2" />
 
     <ScrollView
@@ -155,8 +155,8 @@
         android:layout_marginTop="7dp"
         android:fillViewport="false"
         android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4">
+        android:layout_alignLeft="@+id/txt_contactus"
+        android:layout_alignStart="@+id/txt_contactus">
 
         <TextView
             android:layout_width="wrap_content"
