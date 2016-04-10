@@ -17,14 +17,18 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +37,10 @@ import android.widget.Toast;
 public class addProduct extends AppCompatActivity {
 
     public Button send;
-    public EditText text;
+    public EditText pid,pname,pdesc,pprice,ptype,pcat,pavail,text;
+    public String cat;
+    Context context;
+    public String category_product="default";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +48,71 @@ public class addProduct extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final String category;
+
+
         SharedPreferences shopIdentifier = getSharedPreferences("shopData", Context.MODE_PRIVATE);
         String shop_Identifier = (shopIdentifier.getString("shopIdentifier", ""));
         TextView sh_identifier = (TextView)findViewById(R.id.identifier);
 
         sh_identifier.setText(shop_Identifier);
 
+        /*
+        Spinner spin=(Spinner)findViewById(R.id.P_category);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch(position)
+                {
+                    case 0: category_product = "Electronics";
+                          break;
+                    case 1: category_product = "Groceries";
+                        break;
+                    case 2: category_product = "Home and Furniture";
+                        break;
+                    case 3: category_product = "Clothing";
+                        break;
+                    case 4: category_product = "Home and Furniture";
+                        break;
+                    case 5: category_product = "Sports";
+                        break;
+                    case 6: category_product = "Food";
+                        break;
+                    case 7: category_product = "Electrical";
+                        break;
+                    case 8: category_product = "Books and Media";
+                        break;
+                    case 9: category_product = "Pharmacy";
+                        break;
+                    case 10: category_product = "Other";
+                        break;
+
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        */
+
+      //  Toast.makeText(context, cat, Toast.LENGTH_LONG).show();
+
+       // Toast.makeText(context, "cat:"+category_product, Toast.LENGTH_LONG).show();
+
+      // Log.i("ootg", "cat:"+category_product);
 
         send = (Button)findViewById(R.id.sendVal);
         text =(EditText)findViewById(R.id.P_id);
+
+        pid =(EditText)findViewById(R.id.P_id);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +120,43 @@ public class addProduct extends AppCompatActivity {
                 // String  msg = text.getText().toString();
 
                 final String msg1 = text.getText().toString();
+
+                AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+
+                        try {
+                            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                            nameValuePairs.add(new BasicNameValuePair("id", "01"));
+                            nameValuePairs.add(new BasicNameValuePair("message", msg1));
+                            HttpClient httpclient = new DefaultHttpClient();
+                            HttpPost httppost = new HttpPost("http://10.0.3.2/mini/API/addTest.php");
+                            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                            httpclient.execute(httppost);
+
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        // Notifies UI when the task is done
+                       // textView.setText("Insert finished!");
+                        Toast.makeText(getBaseContext(), "Sent", Toast.LENGTH_SHORT).show();
+                        text.setText("");
+                    }
+                }.execute();
+
+
+
+
+                /*
 
                 Thread t = new Thread(new Runnable() {
                     @Override
@@ -81,20 +181,21 @@ public class addProduct extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                           /* catch(Exception e)
+                        catch(Exception e)
                             {
                                e.printStackTrace();
                             }
-                            */
+
                         }
-                        //
+
                     }
                 });
+
 
                 t.start();
 
                 text.setText("*");
-
+              */
 
                     //display message if text field is empty
                     //Toast.makeText(getBaseContext(),"All fields are required",Toast.LENGTH_SHORT).show();
@@ -103,14 +204,7 @@ public class addProduct extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
