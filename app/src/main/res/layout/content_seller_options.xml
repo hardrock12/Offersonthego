@@ -15,135 +15,131 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#0d0d0d"
         android:text="shop id :"
         android:id="@+id/title1"
+        android:textSize="15dp"
+        android:layout_x="125dp"
+        android:layout_y="13dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="15dp" />
+        android:layout_alignRight="@+id/title8"
+        android:layout_alignEnd="@+id/title8"
+        android:layout_marginRight="32dp"
+        android:layout_marginEnd="32dp" />
 
     <TextView
         android:layout_width="200px"
         android:layout_height="wrap_content"
+        android:textColor="#1e2a83"
         android:id="@+id/shop_id"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="testVal" />
+        android:text="sh_id"
+        android:layout_x="197dp"
+        android:layout_y="29dp"
+        android:layout_alignBottom="@+id/title1"
+        android:layout_toRightOf="@+id/shop_rating"
+        android:layout_toEndOf="@+id/shop_rating"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="shop name :"
-        android:id="@+id/title2"
+        android:textColor="#0d0d0d"
+        android:text="Region :"
+        android:id="@+id/title4"
         android:textSize="15dp"
-        android:layout_below="@+id/shop_id"
+        android:layout_x="271dp"
+        android:layout_y="254dp"
+        android:layout_marginTop="70dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/shop_id" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0d0d0d"
+        android:text="Shop Type :"
+        android:id="@+id/title5"
+        android:textSize="15dp"
+        android:layout_below="@+id/title4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_x="36dp"
+        android:layout_y="73dp" />
 
     <TextView
         android:layout_width="500px"
         android:layout_height="wrap_content"
-        android:id="@+id/shop_name"
-        android:layout_alignBottom="@+id/title2"
+        android:textColor="#205929"
+        android:id="@+id/shop_type"
+        android:layout_below="@+id/title4"
+        android:text="sh_type"
+        android:layout_x="37dp"
+        android:layout_y="450dp"
         android:layout_alignLeft="@+id/shop_id"
         android:layout_alignStart="@+id/shop_id" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address :"
-        android:id="@+id/title3"
-        android:textSize="15dp"
-        android:layout_below="@+id/title2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="500px"
-        android:layout_height="wrap_content"
-        android:id="@+id/shop_address"
-        android:layout_below="@+id/shop_name"
-        android:layout_alignLeft="@+id/shop_name"
-        android:layout_alignStart="@+id/shop_name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Region :"
-        android:id="@+id/title4"
-        android:textSize="15dp"
-        android:layout_below="@+id/shop_address"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="500px"
-        android:layout_height="wrap_content"
-        android:id="@+id/shop_region"
-        android:layout_below="@+id/title3"
-        android:layout_alignLeft="@+id/shop_address"
-        android:layout_alignStart="@+id/shop_address" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Shop Type :"
-        android:id="@+id/title5"
-        android:textSize="15dp"
-        android:layout_below="@+id/title4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="500px"
-        android:layout_height="wrap_content"
-        android:id="@+id/shop_type"
-        android:layout_below="@+id/title4"
-        android:layout_alignLeft="@+id/shop_region"
-        android:layout_alignStart="@+id/shop_region" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textColor="#0d0d0d"
         android:text="Phone No :"
         android:id="@+id/title6"
         android:textSize="15dp"
         android:layout_below="@+id/title5"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_x="208dp"
+        android:layout_y="122dp" />
 
     <TextView
         android:layout_width="500px"
         android:layout_height="wrap_content"
+        android:textColor="#205929"
         android:id="@+id/shop_phno"
         android:layout_alignBottom="@+id/title6"
         android:layout_alignLeft="@+id/shop_type"
-        android:layout_alignStart="@+id/shop_type" />
+        android:layout_alignStart="@+id/shop_type"
+        android:text="sh_phoneno"
+        android:layout_x="17dp"
+        android:layout_y="138dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#0d0d0d"
         android:text="Seller Name :"
         android:id="@+id/title7"
         android:textSize="15dp"
         android:layout_below="@+id/title6"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_x="63dp"
+        android:layout_y="154dp" />
 
     <TextView
         android:layout_width="500px"
         android:layout_height="wrap_content"
+        android:textColor="#205929"
         android:id="@+id/shop_sellerName"
         android:layout_below="@+id/shop_phno"
         android:layout_alignLeft="@+id/shop_phno"
-        android:layout_alignStart="@+id/shop_phno" />
+        android:layout_alignStart="@+id/shop_phno"
+        android:text="sh_sellername"
+        android:layout_x="55dp"
+        android:layout_y="275dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No of Products Registered :"
+        android:textColor="#0d0d0d"
+        android:text="Products Registered        : "
         android:id="@+id/title8"
         android:textSize="15dp"
+        android:layout_x="172dp"
+        android:layout_y="163dp"
+        android:layout_marginTop="55dp"
         android:layout_below="@+id/title7"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -151,35 +147,49 @@
     <TextView
         android:layout_width="200px"
         android:layout_height="wrap_content"
+        android:textColor="#a42a23"
         android:id="@+id/shop_nor"
         android:layout_above="@+id/shop_noo"
         android:layout_toRightOf="@+id/title8"
-        android:layout_toEndOf="@+id/title8" />
+        android:layout_toEndOf="@+id/title8"
+        android:text="sh_registred"
+        android:layout_x="88dp"
+        android:layout_y="421dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No of Products Out of Stock :"
+        android:textColor="#0d0d0d"
+        android:text="Products Out of Stock     : "
         android:id="@+id/title9"
         android:textSize="15dp"
         android:layout_below="@+id/title8"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_x="23dp"
+        android:layout_y="296dp" />
 
     <TextView
         android:layout_width="200px"
         android:layout_height="wrap_content"
+        android:textColor="#a42a23"
         android:id="@+id/shop_noo"
         android:layout_alignBottom="@+id/title9"
         android:layout_toRightOf="@+id/title9"
-        android:layout_toEndOf="@+id/title9" />
+        android:layout_toEndOf="@+id/title9"
+        android:text="sh_outofstock"
+        android:layout_x="100dp"
+        android:layout_y="334dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No of Products In Stock :"
+        android:textColor="#0d0d0d"
+        android:text="Products In Stock             : "
         android:id="@+id/textView6"
         android:textSize="15dp"
+        android:layout_x="19dp"
+        android:layout_y="195dp"
         android:layout_below="@+id/title9"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -187,27 +197,88 @@
     <TextView
         android:layout_width="200px"
         android:layout_height="wrap_content"
+        android:textColor="#a42a23"
         android:id="@+id/shop_noi"
         android:layout_alignBottom="@+id/textView6"
         android:layout_alignLeft="@+id/shop_nor"
-        android:layout_alignStart="@+id/shop_nor" />
+        android:layout_alignStart="@+id/shop_nor"
+        android:text="sh_instock"
+        android:layout_x="38dp"
+        android:layout_y="232dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#0d0d0d"
         android:text="Rating :"
         android:id="@+id/textView3"
         android:textSize="15dp"
-        android:layout_below="@+id/textView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_x="41dp"
+        android:layout_y="94dp"
+        android:layout_below="@+id/shop_noi"
+        android:layout_alignRight="@+id/title4"
+        android:layout_alignEnd="@+id/title4"
+        android:layout_marginTop="28dp" />
 
     <TextView
         android:layout_width="200px"
         android:layout_height="wrap_content"
         android:id="@+id/shop_rating"
+        android:text="sh_rating"
+        android:layout_x="226dp"
+        android:layout_y="64dp"
         android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/title1"
-        android:layout_toEndOf="@+id/title1" />
+        android:layout_toRightOf="@+id/title4"
+        android:layout_toEndOf="@+id/title4" />
+
+    <TextView
+        android:layout_width="500px"
+        android:layout_height="wrap_content"
+        android:id="@+id/shop_region"
+        android:textColor="#205929"
+        android:text="sh_region"
+        android:layout_x="120dp"
+        android:layout_y="390dp"
+        android:layout_alignTop="@+id/title4"
+        android:layout_alignLeft="@+id/shop_type"
+        android:layout_alignStart="@+id/shop_type" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0d0d0d"
+        android:text="Address :"
+        android:id="@+id/textView15"
+        android:textSize="15dp"
+        android:layout_x="152dp"
+        android:layout_y="108dp"
+        android:layout_above="@+id/shop_region"
+        android:layout_alignLeft="@+id/title8"
+        android:layout_alignStart="@+id/title8" />
+
+    <TextView
+        android:layout_width="500px"
+        android:layout_height="wrap_content"
+        android:textColor="#205929"
+        android:id="@+id/shop_address"
+        android:text="sh_address"
+        android:layout_x="12dp"
+        android:layout_y="373dp"
+        android:layout_alignTop="@+id/textView15"
+        android:layout_alignLeft="@+id/shop_region"
+        android:layout_alignStart="@+id/shop_region" />
+
+    <TextView
+        android:textColor="#a31412"
+        android:layout_width="500px"
+        android:layout_height="wrap_content"
+        android:id="@+id/shop_name"
+        android:text="sh_name"
+        android:layout_x="33dp"
+        android:layout_y="50dp"
+        android:textSize="25dp"
+        android:layout_below="@+id/shop_id"
+        android:layout_toRightOf="@+id/title6"
+        android:layout_toEndOf="@+id/title6" />
 
 </RelativeLayout>
