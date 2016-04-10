@@ -111,6 +111,8 @@
         android:layout_alignRight="@+id/textView9"
         android:layout_alignEnd="@+id/textView9" />
 
+
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -123,7 +125,29 @@
             android:layout_alignLeft="@+id/P_desc"
             android:layout_alignStart="@+id/P_desc"
                 android:layout_column="0" />
+        </TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MRP :"
+            android:id="@+id/textView14"
+            android:layout_marginTop="35dp"
+            android:layout_below="@+id/textView9"
+            android:layout_alignRight="@+id/textView9"
+            android:layout_alignEnd="@+id/textView9" />
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:id="@+id/P_mrp"
+            android:layout_alignBottom="@+id/textView10"
+            android:layout_alignLeft="@+id/P_desc"
+            android:layout_alignStart="@+id/P_desc"
+            android:layout_column="0" />
         </TableRow>
 
         <TextView
