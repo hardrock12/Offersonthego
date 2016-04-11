@@ -79,19 +79,7 @@ public class sellerOptions extends AppCompatActivity
 
 
 
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "seller main page", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
-      final TextView shopi=(TextView)findViewById(R.id.shop_id);
+          final TextView shopi=(TextView)findViewById(R.id.shop_id);
         shopi.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -172,13 +160,16 @@ public class sellerOptions extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.update_product) {
 
+            Intent intent=new Intent(context,Seller_products.class);
+            context.startActivity(intent);
+
         } else if (id == R.id.change_availability) {
 
         } else if (id == R.id.remove_product) {
 
         } else if (id == R.id.update_location) {
 
-        } else if (id == R.id.update_location) {
+        } else if (id == R.id.feature_product) {
 
         }
         else if (id == R.id.logout) {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product id"
+        android:id="@+id/textView16"
+        android:layout_x="12dp"
+        android:layout_y="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id_value"
+        android:id="@+id/list_pro_id"
+        android:layout_x="14dp"
+        android:layout_y="47dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Name"
+        android:id="@+id/textView18"
+        android:layout_x="128dp"
+        android:layout_y="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name_value"
+        android:id="@+id/list_pro_name"
+        android:layout_x="131dp"
+        android:layout_y="46dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:id="@+id/textView20"
+        android:layout_x="293dp"
+        android:layout_y="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pro_price"
+        android:id="@+id/list_pro_price"
+        android:layout_x="291dp"
+        android:layout_y="44dp" />
+</AbsoluteLayout>
