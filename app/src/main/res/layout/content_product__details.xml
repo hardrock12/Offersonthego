@@ -2,167 +2,210 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="5dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="arjun.offersonthego.product_Details"
-    tools:showIn="@layout/activity_product__details">
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/product_image" />
-
-    <TextView
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:text="Jive Milk Shake"
-        android:textSize="20sp"
-        android:layout_alignTop="@+id/product_image"
-        android:layout_toRightOf="@+id/product_image"
-        android:layout_toEndOf="@+id/product_image"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="41dp"
-        android:id="@+id/product_name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pcost"
-        android:text="MRP:"
-
-        android:layout_below="@+id/product_name"
-        android:layout_alignLeft="@+id/product_name"
-        android:layout_alignStart="@+id/product_name"
-        android:layout_marginTop="17dp"
-        android:textColor="#6a0f0f" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/selling_price"
-        android:text="Selling Price:"
-        android:layout_below="@+id/pcost"
-        android:layout_alignLeft="@+id/pcost"
-        android:layout_alignStart="@+id/pcost" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/you_save"
-        android:text="You Save "
-
-        android:textColor="#42b642"
-        android:layout_below="@+id/selling_price"
-        android:layout_alignLeft="@+id/selling_price"
-        android:layout_alignStart="@+id/selling_price" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
-        android:id="@+id/Product_Rating"
-        android:text="Rating:"
-        android:textColor="#000000"
-
-        android:layout_below="@+id/you_save"
-        android:layout_alignLeft="@+id/you_save"
-        android:layout_alignStart="@+id/you_save" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tx_Rate_this_product"
-        android:text="Rate product"
-        android:layout_alignBottom="@+id/ratingBar"
-        android:layout_alignLeft="@+id/product_image"
-        android:layout_alignStart="@+id/product_image" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tx_sold_by"
-        android:text="Sold by "
-        android:textSize="20sp"
-
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/product_image"
-        android:layout_alignStart="@+id/product_image"
-        android:layout_alignRight="@+id/selling_price"
-        android:layout_alignEnd="@+id/selling_price" />
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_below="@+id/product_image"
-        android:layout_alignRight="@+id/product_name"
-        android:layout_alignEnd="@+id/product_name"
-        android:id="@+id/ratingBar" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Address"
-        android:id="@+id/Shop_Address"
-
-
-        android:layout_below="@+id/tx_sold_by"
-        android:layout_alignLeft="@+id/call_button"
-        android:layout_alignStart="@+id/call_button" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contact us "
-
-        android:layout_alignBottom="@+id/call_button"
-        android:layout_alignLeft="@+id/tx_sold_by"
-        android:layout_alignStart="@+id/tx_sold_by"
-        android:id="@+id/txt_contactus" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Call 9495889419"
-        android:layout_below="@+id/tx_sold_by"
-        android:layout_toRightOf="@+id/tx_Rate_this_product"
-        android:layout_toEndOf="@+id/tx_Rate_this_product"
-        android:layout_marginTop="41dp"
-        android:id="@+id/call_button" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Navigate To"
-        android:layout_below="@+id/call_button"
-        android:layout_alignLeft="@+id/call_button"
-        android:layout_alignStart="@+id/call_button"
-        android:id="@+id/button2" />
+    tools:showIn="@layout/activity_product__details"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:fillViewport="false"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/txt_contactus"
-        android:layout_alignStart="@+id/txt_contactus">
+        android:layout_width="match_parent"
+        android:layout_height="893dp"
+        android:fillViewport="false">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/large_text" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="700dp"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Call 9495889419"
+                android:id="@+id/call_button"
+                android:layout_marginTop="58dp"
+                android:layout_below="@+id/Shop_Address"
+                android:layout_alignLeft="@+id/button2"
+                android:layout_alignStart="@+id/button2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact us "
+
+                android:id="@+id/txt_contactus"
+                android:layout_alignTop="@+id/call_button"
+                android:layout_alignLeft="@+id/tx_sold_by"
+                android:layout_alignStart="@+id/tx_sold_by" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Navigate To"
+                android:id="@+id/button2"
+                android:layout_below="@+id/call_button"
+                android:layout_toRightOf="@+id/txt_contactus"
+                android:layout_alignRight="@+id/Availab"
+                android:layout_alignEnd="@+id/Availab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:id="@+id/Shop_Address"
+
+
+                android:layout_below="@+id/tx_sold_by"
+                android:layout_alignLeft="@+id/ratingBar"
+                android:layout_alignStart="@+id/ratingBar" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:layout_below="@+id/product_image"
+                android:layout_toRightOf="@+id/tx_Rate_this_product"
+                android:layout_toEndOf="@+id/tx_Rate_this_product" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tx_sold_by"
+                android:text="Sold by "
+                android:textSize="20sp"
+
+                android:layout_marginTop="124dp"
+                android:layout_below="@+id/ratingBar"
+                android:layout_alignLeft="@+id/product_image"
+                android:layout_alignStart="@+id/product_image" />
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/product_image"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pcost"
+                android:text="MRP:"
+
+                android:layout_below="@+id/product_name"
+                android:layout_alignLeft="@+id/product_name"
+                android:layout_alignStart="@+id/product_name"
+                android:layout_marginTop="17dp"
+                android:textColor="#6a0f0f"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:id="@+id/Product_Rating"
+                android:text="Rating:"
+                android:textColor="#000000"
+
+                android:layout_below="@+id/you_save"
+                android:layout_alignLeft="@+id/you_save"
+                android:layout_alignStart="@+id/you_save"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:text="Jive Milk Shake"
+                android:textSize="20sp"
+                android:id="@+id/product_name"
+                android:layout_alignTop="@+id/product_image"
+                android:layout_alignRight="@+id/ratingBar"
+                android:layout_alignEnd="@+id/ratingBar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tx_Rate_this_product"
+                android:text="Rate product"
+                android:layout_alignBottom="@+id/ratingBar"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="17dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/selling_price"
+                android:text="Selling Price:"
+                android:layout_below="@+id/pcost"
+                android:layout_alignLeft="@+id/pcost"
+                android:layout_alignStart="@+id/pcost"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/you_save"
+                android:text="You Save "
+
+                android:textColor="#42b642"
+                android:layout_below="@+id/selling_price"
+                android:layout_alignLeft="@+id/selling_price"
+                android:layout_alignStart="@+id/selling_price"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:id="@+id/descpriton"
+                android:layout_below="@+id/ratingBar"
+                android:layout_toLeftOf="@+id/ratingBar"
+                android:layout_toStartOf="@+id/ratingBar" />
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:layout_below="@+id/descpriton"
+                android:layout_alignRight="@+id/Shop_Address"
+                android:layout_alignEnd="@+id/Shop_Address"
+                android:layout_marginTop="19dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/Availab"
+                android:layout_above="@+id/ratingBar"
+                android:layout_alignLeft="@+id/Product_Rating"
+                android:layout_alignStart="@+id/Product_Rating"
+                android:textStyle="bold"
+                android:textColor="#26c240"
+                android:textSize="10sp" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_and_review"
+                android:layout_below="@+id/button2"
+                android:layout_alignLeft="@+id/descpriton"
+                android:layout_alignStart="@+id/descpriton">
+
+            </ListView>
+        </RelativeLayout>
+
 
     </ScrollView>
+
 
 </RelativeLayout>
