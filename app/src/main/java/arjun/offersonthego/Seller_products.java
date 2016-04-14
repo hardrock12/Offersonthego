@@ -1,6 +1,7 @@
 package arjun.offersonthego;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -83,9 +86,12 @@ public class Seller_products extends AppCompatActivity {
 
     public Button search_button;
     public EditText search_text;
+    public static String OPERATION = "";
     Context context;
     public String term;
     public TextView sh_id;
+   // public static String SHOP_ID="arjun.offersonthego.updateproduct.shopid";
+    public static String PRODUCT_ID="arjun.offersonthego.updateproduct.productid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +109,12 @@ public class Seller_products extends AppCompatActivity {
         sh_id.setText(shop_Identifier);
 
         context=this;
+        Intent intent = getIntent();
+        final String operation = intent.getStringExtra(sellerOptions.OPERATION);
+        TextView oper = (TextView)findViewById(R.id.id_operation);
+        oper.setText(operation);
 
-        ArrayList<Seller_Products_Results_Model> arraylist = new ArrayList<Seller_Products_Results_Model>();
+        final ArrayList<Seller_Products_Results_Model> arraylist = new ArrayList<Seller_Products_Results_Model>();
         Seller_Items_Adapter search_itemsAdapter = new Seller_Items_Adapter(this, arraylist);
         ListView lvsresults = (ListView) findViewById(R.id.listview_seller_products);
         lvsresults.setAdapter(search_itemsAdapter);
@@ -112,6 +122,16 @@ public class Seller_products extends AppCompatActivity {
         lvsresults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.i("ootg", "Operation" + operation);
+                if(operation.equals("update"))
+                {
+                    Intent update_pro = new Intent(context,Update_product.class);
+                    Log.i("ootg", "PRODUCT ID:" + PRODUCT_ID);
+                    update_pro.putExtra(PRODUCT_ID,arraylist.get(position).productid);
+                    startActivity(update_pro);
+
+                }
 
 
             }
@@ -130,7 +150,7 @@ public class Seller_products extends AppCompatActivity {
               term=search_text.getText().toString();
               seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
              // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
-              tasks.execute("http://10.0.3.2/mini/API/arjun/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
+              tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
 
 
           }
@@ -161,7 +181,7 @@ class seller_products_task extends AsyncTask<String, Void, String> {
 
 
         ListView lvsearch = (ListView) rv.findViewById(R.id.listview_seller_products);
-       Seller_Items_Adapter adapter = (Seller_Items_Adapter) lvsearch.getAdapter();
+        Seller_Items_Adapter adapter = (Seller_Items_Adapter) lvsearch.getAdapter();
         adapter.clear();
         adapter.addAll(Seller_Products_Results_Model.fromJson(jsonArray));
 

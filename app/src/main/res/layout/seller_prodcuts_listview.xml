@@ -50,4 +50,12 @@
         android:id="@+id/list_pro_price"
         android:layout_x="291dp"
         android:layout_y="44dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Availability"
+        android:id="@+id/pro_avail"
+        android:layout_x="131dp"
+        android:layout_y="71dp" />
 </AbsoluteLayout>

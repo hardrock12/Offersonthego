@@ -40,6 +40,7 @@ public class sellerOptions extends AppCompatActivity
    // public static String LOGIN_PHP_SCRIPT = "http://offersonthego.16mb.com/API/loginapi.php?";
     public static String LOGIN_NAMES = "";
     public static String LOGIN_PASSWDS = "";
+    public static String OPERATION = "arjun.selleroptions.operation";
     SharedPreferences shopIdentifier;
 
     public String id;
@@ -161,6 +162,7 @@ public class sellerOptions extends AppCompatActivity
         } else if (id == R.id.update_product) {
 
             Intent intent=new Intent(context,Seller_products.class);
+            intent.putExtra(OPERATION, "update");
             context.startActivity(intent);
 
         } else if (id == R.id.change_availability) {

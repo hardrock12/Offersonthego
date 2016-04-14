@@ -68,6 +68,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="arjun.offersonthego.sellerOptions" />
         </activity>
+		 <activity
+            android:name=".Update_product"
+            android:label="@string/title_activity_update_products"
+            android:parentActivityName=".Seller_products"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="arjun.offersonthego.Seller_products" />
+        </activity>
         <activity
             android:name=".Seller_products"
             android:label="@string/title_activity_seller_products"
