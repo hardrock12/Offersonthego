@@ -188,6 +188,43 @@ public class Seller_products extends AppCompatActivity {
                 else if(operation.equals("feature"))
                 {
 
+
+                    AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+
+
+                        @Override
+                        protected Void doInBackground(Void... params) {
+
+                            try {
+                                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                                Log.i("log:","shop id:" + shop_Identifier + "pid:" + arraylist.get(position).productid);
+                                nameValuePairs.add(new BasicNameValuePair("shopid",shop_Identifier));
+                                nameValuePairs.add(new BasicNameValuePair("pid", arraylist.get(position).productid));
+                                HttpClient httpclient = new DefaultHttpClient();
+                                HttpPost httppost = new HttpPost("http://10.0.3.2/mini/API/new/featuredapi.php");
+                                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                                httpclient.execute(httppost);
+                            }
+                            catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            // Notifies UI when the task is done
+                            // textView.setText("Insert finished!");
+                            Toast.makeText(getBaseContext(), "product featured", Toast.LENGTH_SHORT).show();
+                            term=search_text.getText().toString();
+                            seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
+                            // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
+                            tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
+                        }
+                    }.execute();
+
+
                 }
             }
         });
