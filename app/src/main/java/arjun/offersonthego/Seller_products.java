@@ -1,6 +1,8 @@
 package arjun.offersonthego;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,7 +18,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +37,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 class Seller_Products_Results_Model {
@@ -90,8 +100,8 @@ public class Seller_products extends AppCompatActivity {
     Context context;
     public String term;
     public TextView sh_id;
-   // public static String SHOP_ID="arjun.offersonthego.updateproduct.shopid";
     public static String PRODUCT_ID="arjun.offersonthego.updateproduct.productid";
+    public AlertDialog.Builder dialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,15 +142,20 @@ public class Seller_products extends AppCompatActivity {
                     startActivity(update_pro);
 
                 }
+                else if(operation.equals("remove"))
+                {
+                      showMessage(shop_Identifier,arraylist.get(position).productid);
+                }
+                else if(operation.equals("availability"))
+                {
 
+                }
+                else if(operation.equals("feature"))
+                {
 
+                }
             }
         });
-
-
-
-
-
 
       search_button.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -149,18 +164,80 @@ public class Seller_products extends AppCompatActivity {
 
               term=search_text.getText().toString();
               seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
-             // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
+              // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
               tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
 
 
           }
       });
 
-
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    public void showMessage(final String shop_identi, final String product_identifier)
+    {
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("Delete");
+        dialogBuilder.setMessage("Are you aure you want to delete?");
+        dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+
+                        try {
+                            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                            Log.i("log:","shop id:" + shop_identi + "pid:" + product_identifier);
+                            nameValuePairs.add(new BasicNameValuePair("shopid",shop_identi));
+                            nameValuePairs.add(new BasicNameValuePair("pid", product_identifier));
+                            HttpClient httpclient = new DefaultHttpClient();
+                            HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/deleteapi.php");
+                            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                            httpclient.execute(httppost);
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        // Notifies UI when the task is done
+                        // textView.setText("Insert finished!");
+                        Toast.makeText(getBaseContext(), "Product Deleted", Toast.LENGTH_SHORT).show();
+                        term=search_text.getText().toString();
+                        seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
+                        // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
+                        tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_identi + "&search=" + term);
+                    }
+                }.execute();
+
+
+
+
+
+            }
+        });
+        dialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(getBaseContext(), "Product not removed", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+        AlertDialog deleteDialog = dialogBuilder.create();
+        deleteDialog.show();
+    }
+
 
 }
 class seller_products_task extends AsyncTask<String, Void, String> {

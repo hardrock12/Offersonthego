@@ -80,13 +80,6 @@ public class Update_product extends AppCompatActivity {
         tasks.execute("http://offersonthego.16mb.com/API/updateRetrive.php?shopid=" + shop_Identifier + "&pid=" + product_id);
 
 
-
-
-
-
-
-
-
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +111,7 @@ public class Update_product extends AppCompatActivity {
                     protected Void doInBackground(Void... params) {
 
                         try {
+
                             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(9);
                             nameValuePairs.add(new BasicNameValuePair("sh_id", shop_Identifier));
                             nameValuePairs.add(new BasicNameValuePair("p_id", product_id));
@@ -148,8 +142,6 @@ public class Update_product extends AppCompatActivity {
                         //pid.setText("");
                         // Intent goBack = new Intent(context,Seller_products.class);
                         // startActivity(goBack);
-
-
                         // pname.setText("");
                         //pdesc.setText("");
                         //pprice.setText("");

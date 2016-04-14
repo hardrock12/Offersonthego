@@ -167,11 +167,23 @@ public class sellerOptions extends AppCompatActivity
 
         } else if (id == R.id.change_availability) {
 
+            Intent intent=new Intent(context,Seller_products.class);
+            intent.putExtra(OPERATION, "availability");
+            context.startActivity(intent);
+
         } else if (id == R.id.remove_product) {
+
+            Intent intent=new Intent(context,Seller_products.class);
+            intent.putExtra(OPERATION, "remove");
+            context.startActivity(intent);
 
         } else if (id == R.id.update_location) {
 
         } else if (id == R.id.feature_product) {
+
+            Intent intent=new Intent(context,Seller_products.class);
+            intent.putExtra(OPERATION, "feature");
+            context.startActivity(intent);
 
         }
         else if (id == R.id.logout) {
