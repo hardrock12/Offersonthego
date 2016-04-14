@@ -51,6 +51,7 @@ public class Search_Result extends AppCompatActivity {
     public Search_ItemsAdapter search_itemsAdapter;
 
     Context context;
+    static boolean stop_image_download = false;
 public ArrayList<Search_Results_Model> Nearby(ArrayList<Search_Results_Model> arr)
 {
 
@@ -77,7 +78,9 @@ return arr;
     public void load_Images() {
         for (int i = 0; i < arraylist.size(); i++) {
             model_for_loading_image = arraylist.get(i);
-
+            if (stop_image_download) {
+                return;
+            }
             async_image_loading image_loading = new async_image_loading(new async_response_bitmap() {
                 @Override
                 public void Processbitmap(Bitmap b, int i) {
@@ -88,7 +91,7 @@ return arr;
                     search_itemsAdapter.notifyDataSetChanged();
 
                 }
-            }, i);
+            }, i, stop_image_download);
             try {
                 image_loading.execute(model_for_loading_image.sourc.getString("product_image"));
             } catch (JSONException ex) {
@@ -101,7 +104,9 @@ return arr;
     }
     public void update_Locations() {
 
-
+        if (stop_image_download) {
+            return;
+        }
         //building url
         String url;
         url = GOOGLE_DIRECTION_MATRIX + "origins=" + CURRENT_LAT + "," + CURRENT_LONG + "&destinations=";
@@ -262,11 +267,11 @@ response_result_model_to_adapters=Nearby(response_result_model_to_adapters);
         /*get by intent uncomment if not working
         String searchterm = intent.getStringExtra(MainActivity.SEARCH_TERM);
         String searchcat = intent.getStringExtra(MainActivity.SEARCH_CATEGORY);
-        String searchregion = intent.getStringExtra(MainActivity.SEARCH_REGION);
+        String searchregion = intent.getStringExtra(MainActivity.SEARCH_REGION);*/
         SEARCH_TERM = searchterm;
         SEARCH_CATEGORY = searchcat;
         SEARCH_REGION = searchregion;
-        */
+
 
 
 // connecting to listview by adapter
@@ -279,6 +284,7 @@ response_result_model_to_adapters=Nearby(response_result_model_to_adapters);
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
              Intent inte=new Intent(context,product_Details.class);
+                Search_Result.stop_image_download = true;
                 inte.putExtra(SEARCH_SHOP_ID,arraylist.get(position).shopid);
                 inte.putExtra(SEARCH_PRODUCT_ID,arraylist.get(position).productid);
                 startActivity(inte);

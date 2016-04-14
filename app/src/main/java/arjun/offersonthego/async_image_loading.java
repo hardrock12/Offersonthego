@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.InputStream;
 
@@ -14,16 +13,21 @@ import java.io.InputStream;
 public class async_image_loading extends AsyncTask<String, Void, Bitmap> {
     Bitmap bmImage;
     async_response_bitmap call;
-
+    boolean s;
     int i;
 
-    public async_image_loading(async_response_bitmap resp, int index) {
+    public async_image_loading(async_response_bitmap resp, int index, boolean contin) {
         call = resp;
         i = index;
-
+        s = contin;
     }
 
     protected Bitmap doInBackground(String... urls) {
+        if (s == true) {
+
+            return null;
+
+        }
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
         try {
@@ -37,7 +41,9 @@ public class async_image_loading extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-
+        if (s == true) {
+            return;
+        }
         call.Processbitmap(result, i);
     }
 }

@@ -21,7 +21,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="22sp"
-        android:text="Search" />
+        android:text=""
+        android:hint="Search Product" />
 
     <Button
         android:layout_width="wrap_content"

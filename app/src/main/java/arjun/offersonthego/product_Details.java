@@ -3,6 +3,9 @@ package arjun.offersonthego;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,12 +28,38 @@ import java.util.List;
 
 public class product_Details extends AppCompatActivity {
     public static JSONObject staticroot;
-
+    public static double CURRENT_LAT;
+    public static double CURRENT_LONG;
     Context mcontext;
+
+    public void registerGPS() {
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the GPS location provider.
+                CURRENT_LAT = location.getLatitude();
+                CURRENT_LONG = location.getLongitude();
+
+
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+        //  if(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200, 5, locationListener);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerGPS();
         setContentView(R.layout.activity_product__details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,7 +82,18 @@ public class product_Details extends AppCompatActivity {
 
             @Override
             public void run() {
+                JSONObject root = null;
+                try {
+                    root = new JSONObject(response);
+                } catch (JSONException ex)
 
+                {
+                    ex.printStackTrace();
+                    return;
+                }
+
+
+                staticroot = root;
                 TextView productname = (TextView) findViewById(R.id.product_name);
                 TextView productcost = (TextView) findViewById(R.id.pcost);
                 TextView sellingprice = (TextView) findViewById(R.id.selling_price);
@@ -65,13 +105,28 @@ public class product_Details extends AppCompatActivity {
                 RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
 
                 TextView shop_address = (TextView) findViewById(R.id.Shop_Address);
-
+                Button navi = (Button) findViewById(R.id.navigate_to);
+                navi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent d = new Intent(mcontext, Map_route.class);
+                        d.putExtra("origin_lat", CURRENT_LAT);
+                        d.putExtra("origin_lon", CURRENT_LONG);
+                        try {
+                            d.putExtra("dest_lat", Double.parseDouble(staticroot.getJSONObject("shop_location").getString("lattitude")));
+                            d.putExtra("dest_lon", Double.parseDouble(staticroot.getJSONObject("shop_location").getString("longitude")));
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                            return;
+                        }
+                        startActivity(d);
+                    }
+                });
 
                 Button call_text = (Button) findViewById(R.id.call_button);
 
                 try {
-                    JSONObject root = new JSONObject(response);
-                    staticroot = root;
+
                     productname.setText(root.getString("product_name"));
                     productcost.setText("MRP:Rs " + root.getString("MRP"));
                     sellingprice.setText("Selling Price:Rs " + root.getString("price"));
@@ -153,7 +208,7 @@ public class product_Details extends AppCompatActivity {
                             ImageView img = (ImageView) findViewById(R.id.product_image);
                             img.setImageBitmap(b);
                         }
-                    }, 0);
+                    }, 0, false);
                     product_image_download.execute(root.getString("product_image"));
                 } catch (JSONException ex) {
                     ex.printStackTrace();

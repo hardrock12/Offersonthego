@@ -30,7 +30,9 @@
 
     <string name="title_activity_search__result">Search Result</string>
     <string name="title_activity_login">Login</string>
-    <string name="title_activity_product_details">product_details</string>
+    <string name="title_activity_product_details">Product Details</string>
+    <string name="google_app_id">api-project-582482063298</string>
+
        <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -127,5 +129,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_add_product">Add Product</string>
     <string name="title_activity_seller_products">Seller Products</string>
-	 <string name="title_activity_update_products">Update Product</string>
+    <string name="title_activity_update_products">Update Product</string>
 </resources>
