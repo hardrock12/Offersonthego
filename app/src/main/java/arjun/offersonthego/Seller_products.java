@@ -131,7 +131,7 @@ public class Seller_products extends AppCompatActivity {
 // setting on click listener for Listview
         lvsresults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 Log.i("ootg", "Operation" + operation);
                 if(operation.equals("update"))
@@ -148,6 +148,41 @@ public class Seller_products extends AppCompatActivity {
                 }
                 else if(operation.equals("availability"))
                 {
+
+                    AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+
+
+                        @Override
+                        protected Void doInBackground(Void... params) {
+
+                            try {
+                                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                                Log.i("log:","shop id:" + shop_Identifier + "pid:" + arraylist.get(position).productid);
+                                nameValuePairs.add(new BasicNameValuePair("shopid",shop_Identifier));
+                                nameValuePairs.add(new BasicNameValuePair("pid", arraylist.get(position).productid));
+                                HttpClient httpclient = new DefaultHttpClient();
+                                HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/availabilityapi.php");
+                                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                                httpclient.execute(httppost);
+                            }
+                            catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            // Notifies UI when the task is done
+                            // textView.setText("Insert finished!");
+                            Toast.makeText(getBaseContext(), "availability changed", Toast.LENGTH_SHORT).show();
+                            term=search_text.getText().toString();
+                            seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
+                            // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
+                            tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
+                        }
+                    }.execute();
 
                 }
                 else if(operation.equals("feature"))

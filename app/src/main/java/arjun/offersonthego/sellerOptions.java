@@ -179,6 +179,8 @@ public class sellerOptions extends AppCompatActivity
 
         } else if (id == R.id.update_location) {
 
+            //update location
+
         } else if (id == R.id.feature_product) {
 
             Intent intent=new Intent(context,Seller_products.class);
