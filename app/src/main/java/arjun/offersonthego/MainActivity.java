@@ -4,6 +4,7 @@ package arjun.offersonthego;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String SEARCH_TERM = "arjun.mainactivity.SEARCHTERM";
     public final static String SEARCH_CATEGORY = "arjun.mainactivity.SEARCHCATEGEORY";
     public final static String SEARCH_REGION = "arjun.mainactivity.SEARCHREGION";
+    SharedPreferences sharedpreferences;
     public MenuItem sign_in;
     // public Menu menu;
     Context context;
@@ -212,6 +214,18 @@ region_dialog.dismiss();
                 intent.putExtra(SEARCH_TERM, msearch_term);
                 intent.putExtra(SEARCH_CATEGORY, msearch_category);
                 intent.putExtra(SEARCH_REGION,mregion_term);
+
+                sharedpreferences = getSharedPreferences("searchValue", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                editor.putString("search_word", msearch_term);
+                editor.putString("search_category", msearch_category);
+                editor.putString("search_region", mregion_term);
+
+                editor.commit();
+
+
+
                 startActivity(intent);
 
 

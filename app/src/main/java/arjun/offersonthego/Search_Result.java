@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
@@ -48,6 +49,7 @@ public class Search_Result extends AppCompatActivity {
     public double CURRENT_LONG;
     public Search_Results_Model model_for_loading_image;
     public Search_ItemsAdapter search_itemsAdapter;
+
     Context context;
 public ArrayList<Search_Results_Model> Nearby(ArrayList<Search_Results_Model> arr)
 {
@@ -235,12 +237,38 @@ response_result_model_to_adapters=Nearby(response_result_model_to_adapters);
         final Intent intent = getIntent();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         registerGPS();
+
+
+        /*
+         editor.putString("search_word", msearch_term);
+                editor.putString("search_category", msearch_category);
+                editor.putString("search_region", mregion_term);
+         */
+
+
+
+        //get by shared preference
+        SharedPreferences sharedPreferences = getSharedPreferences("searchValue", Context.MODE_PRIVATE);
+        String searchterm = (sharedPreferences.getString("search_word", ""));
+        String searchcat = (sharedPreferences.getString("search_category",""));
+        String searchregion = (sharedPreferences.getString("search_region",""));
+
+        SEARCH_TERM = searchterm;
+        SEARCH_CATEGORY = searchcat;
+        SEARCH_REGION = searchregion;
+        // comment if not working
+
+
+        /*get by intent uncomment if not working
         String searchterm = intent.getStringExtra(MainActivity.SEARCH_TERM);
         String searchcat = intent.getStringExtra(MainActivity.SEARCH_CATEGORY);
         String searchregion = intent.getStringExtra(MainActivity.SEARCH_REGION);
         SEARCH_TERM = searchterm;
         SEARCH_CATEGORY = searchcat;
         SEARCH_REGION = searchregion;
+        */
+
+
 // connecting to listview by adapter
         arraylist = new ArrayList<Search_Results_Model>();
         search_itemsAdapter = new Search_ItemsAdapter(this, arraylist);

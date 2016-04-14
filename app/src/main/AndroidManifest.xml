@@ -44,7 +44,7 @@
         <activity
             android:name=".product_Details"
             android:label="@string/title_activity_product__details"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Search_Result"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
