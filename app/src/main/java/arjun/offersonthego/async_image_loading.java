@@ -23,7 +23,7 @@ public class async_image_loading extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected Bitmap doInBackground(String... urls) {
-        if (s == true) {
+        if (Search_Result.stop_image_download == true) {
 
             return null;
 
@@ -41,7 +41,7 @@ public class async_image_loading extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        if (s == true) {
+        if (Search_Result.stop_image_download == true) {
             return;
         }
         call.Processbitmap(result, i);

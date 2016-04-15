@@ -59,6 +59,7 @@ public class product_Details extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Search_Result.stop_image_download=false;
         registerGPS();
         setContentView(R.layout.activity_product__details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

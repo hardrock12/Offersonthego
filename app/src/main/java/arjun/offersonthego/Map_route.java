@@ -147,7 +147,7 @@ public class Map_route extends FragmentActivity {
             // Drawing polyline in the Google Map for the i-th route
             map.addPolyline(lineOptions);
             LatLng coordinate = new LatLng(getIntent().getDoubleExtra("origin_lat", 0.0), getIntent().getDoubleExtra("origin_lon", 0.0));
-            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 15);
+            CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 10);
             map.animateCamera(yourLocation);
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(getIntent().getDoubleExtra("dest_lat", 0.0), getIntent().getDoubleExtra("dest_lon", 0.0)))

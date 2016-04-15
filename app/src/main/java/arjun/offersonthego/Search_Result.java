@@ -235,6 +235,7 @@ response_result_model_to_adapters=Nearby(response_result_model_to_adapters);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        stop_image_download=false;
         setContentView(R.layout.activity_search__result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -61,6 +61,7 @@ public boolean valid_distance=false;
     }
 
     public static ArrayList<Search_Results_Model> fromJson(JSONArray jsonArray) {
+
         ArrayList<Search_Results_Model> models = new ArrayList<Search_Results_Model>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject json_of_one_model = null;

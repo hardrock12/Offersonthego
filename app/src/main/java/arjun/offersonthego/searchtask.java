@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +42,8 @@ public ArrayList<Search_Results_Model> stored_response=null;
             jsonArray = new JSONArray(response);
         } catch (JSONException e) {
             e.printStackTrace();
+            Toast.makeText(mcontext,"Error downloading search results",Toast.LENGTH_LONG).show();
+            return;
         }
 
 
