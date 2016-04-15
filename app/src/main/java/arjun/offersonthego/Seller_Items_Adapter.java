@@ -36,6 +36,8 @@ public class Seller_Items_Adapter extends ArrayAdapter<Seller_Products_Results_M
        // TextView distancetoshop = (TextView) convertView.findViewById(R.id.navigation_distance);
         TextView avail = (TextView) convertView.findViewById(R.id.pro_avail);
 
+        TextView feat = (TextView) convertView.findViewById(R.id.list_feature);
+
         if (result_item.Avail.equals("Y"))
         {
             avail.setText("In Stock");
@@ -44,6 +46,18 @@ public class Seller_Items_Adapter extends ArrayAdapter<Seller_Products_Results_M
         {
             avail.setText("Out of Stock");
         }
+
+        if(result_item.feature.equals("F"))
+        {
+            feat.setText("Featured");
+        }
+        else
+        {
+            feat.setText("");
+        }
+
+
+
        // TextView tvshopname=(TextView)convertView.findViewById(R.id.tv_shop_name);
         //ImageView imgthum = (ImageView) convertView.findViewById(R.id.thumbnail);
         pname.setText(result_item.product_name);

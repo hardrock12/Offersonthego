@@ -48,6 +48,7 @@ class Seller_Products_Results_Model {
     public String Avail;
     public String shopid;
     public String productid;
+    public String feature;
 
     public static Seller_Products_Results_Model fromJson(JSONObject jsonObject) {
         Seller_Products_Results_Model model = new Seller_Products_Results_Model();
@@ -59,6 +60,7 @@ class Seller_Products_Results_Model {
             model.description = jsonObject.getString("description");
             model.price = jsonObject.getString("price");
             model.Avail = jsonObject.getString("availability");
+            model.feature= jsonObject.getString("feature");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -134,20 +136,15 @@ public class Seller_products extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 Log.i("ootg", "Operation" + operation);
-                if(operation.equals("update"))
-                {
-                    Intent update_pro = new Intent(context,Update_product.class);
+                if (operation.equals("update")) {
+                    Intent update_pro = new Intent(context, Update_product.class);
                     Log.i("ootg", "PRODUCT ID:" + PRODUCT_ID);
-                    update_pro.putExtra(PRODUCT_ID,arraylist.get(position).productid);
+                    update_pro.putExtra(PRODUCT_ID, arraylist.get(position).productid);
                     startActivity(update_pro);
 
-                }
-                else if(operation.equals("remove"))
-                {
-                      showMessage(shop_Identifier,arraylist.get(position).productid);
-                }
-                else if(operation.equals("availability"))
-                {
+                } else if (operation.equals("remove")) {
+                    showMessage(shop_Identifier, arraylist.get(position).productid);
+                } else if (operation.equals("availability")) {
 
                     AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
 
@@ -157,16 +154,14 @@ public class Seller_products extends AppCompatActivity {
 
                             try {
                                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                                Log.i("log:","shop id:" + shop_Identifier + "pid:" + arraylist.get(position).productid);
-                                nameValuePairs.add(new BasicNameValuePair("shopid",shop_Identifier));
+                                Log.i("log:", "shop id:" + shop_Identifier + "pid:" + arraylist.get(position).productid);
+                                nameValuePairs.add(new BasicNameValuePair("shopid", shop_Identifier));
                                 nameValuePairs.add(new BasicNameValuePair("pid", arraylist.get(position).productid));
                                 HttpClient httpclient = new DefaultHttpClient();
                                 HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/availabilityapi.php");
                                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                                 httpclient.execute(httppost);
-                            }
-                            catch (IOException e)
-                            {
+                            } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             return null;
@@ -177,17 +172,14 @@ public class Seller_products extends AppCompatActivity {
                             // Notifies UI when the task is done
                             // textView.setText("Insert finished!");
                             Toast.makeText(getBaseContext(), "availability changed", Toast.LENGTH_SHORT).show();
-                            term=search_text.getText().toString();
+                            term = search_text.getText().toString();
                             seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
                             // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
                             tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
                         }
                     }.execute();
 
-                }
-                else if(operation.equals("feature"))
-                {
-
+                } else if (operation.equals("feature")) {
 
                     AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
 
@@ -197,16 +189,14 @@ public class Seller_products extends AppCompatActivity {
 
                             try {
                                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                                Log.i("log:","shop id:" + shop_Identifier + "pid:" + arraylist.get(position).productid);
-                                nameValuePairs.add(new BasicNameValuePair("shopid",shop_Identifier));
+                                Log.i("log:", "shop id:" + shop_Identifier + "pid:" + arraylist.get(position).productid);
+                                nameValuePairs.add(new BasicNameValuePair("shopid", shop_Identifier));
                                 nameValuePairs.add(new BasicNameValuePair("pid", arraylist.get(position).productid));
                                 HttpClient httpclient = new DefaultHttpClient();
-                                HttpPost httppost = new HttpPost("http://10.0.3.2/mini/API/new/featuredapi.php");
+                                HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/featuredapi.php");
                                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                                 httpclient.execute(httppost);
-                            }
-                            catch (IOException e)
-                            {
+                            } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             return null;
@@ -216,18 +206,29 @@ public class Seller_products extends AppCompatActivity {
                         protected void onPostExecute(Void aVoid) {
                             // Notifies UI when the task is done
                             // textView.setText("Insert finished!");
-                            Toast.makeText(getBaseContext(), "product featured", Toast.LENGTH_SHORT).show();
-                            term=search_text.getText().toString();
-                            seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
-                            // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
-                            tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
-                        }
-                    }.execute();
+
+                            String fstatus = arraylist.get(position).feature;
+                            if (fstatus.equals("F"))
+                            {
+                                Toast.makeText(getBaseContext(), "product unfeatured", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(getBaseContext(), "product featured", Toast.LENGTH_SHORT).show();
+                            }
+
+                        term=search_text.getText().toString();
+
+                        seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
+                        tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid="+shop_Identifier+"&search="+term);
+                        // tasks.execute("http://10.0.3.2/mini/API/arjun/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
+                    }
+                }.execute();
 
 
-                }
             }
-        });
+        }
+    });
 
       search_button.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -236,9 +237,8 @@ public class Seller_products extends AppCompatActivity {
 
               term=search_text.getText().toString();
               seller_products_task tasks = new seller_products_task(findViewById(android.R.id.content));
-              // tasks.execute("http://offersonthego.16mb.com/API/api.products.php?searchterm=" + searchterm + "&searchcategory=" + searchcat);
               tasks.execute("http://offersonthego.16mb.com/API/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
-
+              //tasks.execute("http://10.0.3.2/mini/API/arjun/sellerProducts.php?shopid=" + shop_Identifier + "&search=" + term);
 
           }
       });
@@ -250,7 +250,7 @@ public class Seller_products extends AppCompatActivity {
 
         dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle("Delete");
-        dialogBuilder.setMessage("Are you aure you want to delete?");
+        dialogBuilder.setMessage("Are you sure you want to delete?");
         dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

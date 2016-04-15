@@ -58,4 +58,12 @@
         android:id="@+id/pro_avail"
         android:layout_x="131dp"
         android:layout_y="71dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_feature"
+        android:layout_x="16dp"
+        android:layout_y="72dp" />
+
 </AbsoluteLayout>
