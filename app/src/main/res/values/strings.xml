@@ -5,7 +5,26 @@
         <item>Nearby</item>
         <item>Select Region</item>
     </string-array>
+    <string-array name="price_filter">
+        <item>Below 20</item>
+        <item>Below 50</item>
+        <item>Below 100</item>
+        <item>Below 200</item>
+        <item>Below 300</item>
+        <item>Below 400</item>
+        <item>Below 500</item>
+        <item>Below 1000</item>
+        <item>Below 2000</item>
+        <item>Below 3000</item>
+        <item>Below 5000</item>
+        <item>Below 7000</item>
+        <item>Below 9000</item>
+        <item>Below 10000</item>
+        <item>Below 15000</item>
+        <item>Below 20000</item>
 
+
+    </string-array>
     <string-array name="categoryofproducts1">
 
         <item>Electronics</item>

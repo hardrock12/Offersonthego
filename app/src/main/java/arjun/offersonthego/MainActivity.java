@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String SEARCH_TERM = "arjun.mainactivity.SEARCHTERM";
     public final static String SEARCH_CATEGORY = "arjun.mainactivity.SEARCHCATEGEORY";
     public final static String SEARCH_REGION = "arjun.mainactivity.SEARCHREGION";
-    SharedPreferences sharedpreferences;
     public MenuItem sign_in;
+    SharedPreferences sharedpreferences;
     // public Menu menu;
     Context context;
     String msearch_category = "";
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 TextView s = (TextView) view;
                                 mregion_term = s.getText().toString();
-region_dialog.dismiss();
+                                region_dialog.dismiss();
                             }
                         });
                         adp = new ArrayAdapter<String>(context, R.layout.suggestion_listview_layout);
@@ -213,7 +213,7 @@ region_dialog.dismiss();
                 Intent intent = new Intent(context, Search_Result.class);
                 intent.putExtra(SEARCH_TERM, msearch_term);
                 intent.putExtra(SEARCH_CATEGORY, msearch_category);
-                intent.putExtra(SEARCH_REGION,mregion_term);
+                intent.putExtra(SEARCH_REGION, mregion_term);
 
                 sharedpreferences = getSharedPreferences("searchValue", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -223,7 +223,6 @@ region_dialog.dismiss();
                 editor.putString("search_region", mregion_term);
 
                 editor.commit();
-
 
 
                 startActivity(intent);
@@ -254,7 +253,7 @@ region_dialog.dismiss();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
+            startActivity(new Intent(context, SettingsActivity.class));
             return true;
         } else if (id == R.id.sigin_as_seller) {
             Intent intent = new Intent(context, login.class);

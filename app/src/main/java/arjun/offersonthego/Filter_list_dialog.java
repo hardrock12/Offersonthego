@@ -7,10 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 
 /**
  * Created by arjun on 23/3/16.
@@ -42,12 +38,13 @@ public class Filter_list_dialog extends DialogFragment {
                         break;
 
 
-
                     case 1:
-                       select_price_range_dialog price_range_dialog=new select_price_range_dialog(mcontext,mrootview);
+                       /*select_price_range_dialog price_range_dialog=new select_price_range_dialog(mcontext,mrootview);
                         price_range_dialog.show();
-
-break;
+*/
+                        price_filter_dialog pf = new price_filter_dialog(mcontext, mrootview, null);
+                        pf.show(getFragmentManager(), "PRICE_FILTER");
+                        break;
                 }
             }
         });

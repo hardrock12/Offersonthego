@@ -1,7 +1,9 @@
 package arjun.offersonthego;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +34,7 @@ public class product_Details extends AppCompatActivity {
     public static double CURRENT_LAT;
     public static double CURRENT_LONG;
     Context mcontext;
+    Dialog shop_Review;
 
     public void registerGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -105,8 +109,13 @@ public class product_Details extends AppCompatActivity {
                 ListView randr = (ListView) findViewById(R.id.rating_and_review);
                 RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
 
-                TextView shop_address = (TextView) findViewById(R.id.Shop_Address);
+                final TextView shop_address = (TextView) findViewById(R.id.Shop_Address);
                 Button navi = (Button) findViewById(R.id.navigate_to);
+                Button write_Rev = (Button) findViewById(R.id.btn_write_a_review);
+
+
+
+
                 navi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -124,6 +133,47 @@ public class product_Details extends AppCompatActivity {
                     }
                 });
 
+
+                write_Rev.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shop_Review = new Dialog(mcontext);
+                        shop_Review.setCancelable(true);
+                        shop_Review.setContentView(R.layout.write_review_dialog);
+                        shop_Review.setTitle("Reviews:");
+                        Button sbt = (Button) shop_Review.findViewById(R.id.btn_submit_review_shop);
+                        sbt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                                String imei = telephonyManager.getDeviceId();
+                                SharedPreferences sharedPreferences = getSharedPreferences("user_details", Context.MODE_PRIVATE);
+                                String uname = (sharedPreferences.getString("name", "Anonymous"));
+                                //String searchcat = (sharedPreferences.getString("search_category",""));
+                                //String searchregion = (sharedPreferences.getString("search_region",""));
+
+                                common_net_task m = new common_net_task(new common_net_task_Runnnable() {
+                                    @Override
+                                    public void init(String response) {
+
+                                    }
+
+                                    @Override
+                                    public void run() {
+
+                                    }
+                                }, "http://www.google.com");
+                                m.execute();
+                                shop_Review.dismiss();
+                            }
+                        });
+
+
+                        shop_Review.show();
+
+                    }
+                });
+
                 Button call_text = (Button) findViewById(R.id.call_button);
 
                 try {
@@ -132,15 +182,17 @@ public class product_Details extends AppCompatActivity {
                     productcost.setText("MRP:Rs " + root.getString("MRP"));
                     sellingprice.setText("Selling Price:Rs " + root.getString("price"));
                     Product_rating.setText("Rating:" + root.getJSONObject("product_rating_details").getString("avg_product_rating"));
-                    List<String> sl = new ArrayList<String>();
+                    ArrayList<review_model> sl = new ArrayList<review_model>();
                     JSONArray shop_ratings = root.getJSONArray("shop_ratings");
                     for (int i = 0; i < shop_ratings.length(); i++) {
                         JSONObject each = shop_ratings.getJSONObject(i);
-                        sl.add(each.getString("customer_name") + ":" + each.getString("reviews") + "(" + each.getString("rating") + ")");
-
+                        //sl.add(each.getString("customer_name") + ":" + each.getString("reviews") + "(" + each.getString("rating") + ")");
+                        sl.add(new review_model(each.getString("customer_name"), each.getString("reviews"), each.getString("rating")));
                     }
 
-                    randr.setAdapter(new ArrayAdapter<String>(mcontext, R.layout.rating_and_review_listview, sl));
+                    randr.setAdapter(new review_listbox_adapter(mcontext, sl));
+
+
                     if (root.getString("availability").equals("Y")) {
 
                         avai.setText("STATUS:AVAILABLE");

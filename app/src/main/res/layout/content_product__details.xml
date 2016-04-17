@@ -178,9 +178,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
                 android:layout_below="@+id/descpriton"
-                android:layout_alignRight="@+id/Shop_Address"
-                android:layout_alignEnd="@+id/Shop_Address"
-                android:layout_marginTop="19dp" />
+                android:layout_toRightOf="@+id/descpriton"
+                android:layout_alignRight="@+id/selling_price"
+                android:layout_alignEnd="@+id/selling_price" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,13 +196,22 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:id="@+id/rating_and_review"
                 android:layout_below="@+id/navigate_to"
                 android:layout_alignLeft="@+id/descpriton"
                 android:layout_alignStart="@+id/descpriton">
 
             </ListView>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Write a Review"
+                android:id="@+id/btn_write_a_review"
+                android:layout_alignTop="@+id/call_button"
+                android:layout_alignRight="@+id/selling_price"
+                android:layout_alignEnd="@+id/selling_price" />
         </RelativeLayout>
 
 
