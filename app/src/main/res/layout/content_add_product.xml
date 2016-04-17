@@ -212,6 +212,24 @@
             android:layout_alignStart="@+id/sendVal"
                 android:layout_column="0" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Browse Image for product"
+                android:id="@+id/btn_browse"
+                android:layout_column="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -219,7 +237,7 @@
                 android:id="@+id/sendVal"
                 android:layout_below="@+id/P_avail"
                 android:layout_centerHorizontal="true"
-                android:layout_column="10" />
+                android:layout_column="0" />
         </TableRow>
 
     </TableLayout>

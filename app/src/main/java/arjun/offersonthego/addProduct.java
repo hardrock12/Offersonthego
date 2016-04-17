@@ -1,47 +1,54 @@
 package arjun.offersonthego;
 
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-
-
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class addProduct extends AppCompatActivity {
 
-    public Button send;
-    public EditText pid,pname,pdesc,pprice,ptype,pmrp,text;
+    public Button send, btnpimage;
+    public EditText pid, pname, pdesc, pprice, ptype, pmrp, text;
     public String cat;
-    public Spinner pcat,pavail;
+    public Spinner pcat, pavail;
+    public String category_product = "default";
     Context context;
-    public String category_product="default";
+    String image_path_berowsed = "";
+    String Server_full_path = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,35 +61,32 @@ public class addProduct extends AppCompatActivity {
 
         SharedPreferences shopIdentifier = getSharedPreferences("shopData", Context.MODE_PRIVATE);
         final String shop_Identifier = (shopIdentifier.getString("shopIdentifier", ""));
-        TextView sh_identifier = (TextView)findViewById(R.id.identifier);
+        TextView sh_identifier = (TextView) findViewById(R.id.identifier);
 
         sh_identifier.setText(shop_Identifier);
 
       /*  spinner here*/
 
-        send = (Button)findViewById(R.id.sendVal);
-       // text =(EditText)findViewById(R.id.P_id);
+        send = (Button) findViewById(R.id.sendVal);
+        // text =(EditText)findViewById(R.id.P_id);
 
-        pid =(EditText)findViewById(R.id.P_id);
-        pname =(EditText)findViewById(R.id.P_name);
-        pdesc =(EditText)findViewById(R.id.P_desc);
-        pprice =(EditText)findViewById(R.id.P_price);
-        pmrp = (EditText)findViewById(R.id.P_mrp);
-        ptype =(EditText)findViewById(R.id.P_type);
-        pcat = (Spinner)findViewById(R.id.P_category);
-        pavail =(Spinner)findViewById(R.id.P_avail);
+        pid = (EditText) findViewById(R.id.P_id);
+        pname = (EditText) findViewById(R.id.P_name);
+        pdesc = (EditText) findViewById(R.id.P_desc);
+        pprice = (EditText) findViewById(R.id.P_price);
+        pmrp = (EditText) findViewById(R.id.P_mrp);
+        ptype = (EditText) findViewById(R.id.P_type);
+        pcat = (Spinner) findViewById(R.id.P_category);
+        pavail = (Spinner) findViewById(R.id.P_avail);
+        btnpimage = (Button) findViewById(R.id.btn_browse);
 
         String avail = pavail.getSelectedItem().toString();
         final String available;
-          if(avail.equals("Available"))
-          {
-              available = "Y";
-          }
-          else
-          {
-              available = "N";
-          }
-
+        if (avail.equals("Available")) {
+            available = "Y";
+        } else {
+            available = "N";
+        }
 
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -100,13 +104,136 @@ public class addProduct extends AppCompatActivity {
 
                 AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
 
+                    public int uploadFile(String sourceFileUri) {
+                        String upLoadServerUri = "http://offersonthego.16mb.com/API/file_upload.php";
+                        int serverResponseCode = 0;
+                        String uploaded_file = "";
+                        String fileName = sourceFileUri;
+
+                        HttpURLConnection conn = null;
+                        DataOutputStream dos = null;
+                        String lineEnd = "\r\n";
+                        String twoHyphens = "--";
+                        String boundary = "*****";
+                        int bytesRead, bytesAvailable, bufferSize;
+                        byte[] buffer;
+                        int maxBufferSize = 1 * 1024 * 1024;
+                        File sourceFile = new File(sourceFileUri);
+
+                        if (!sourceFile.isFile()) {
+
+
+                            return 0;
+
+                        } else {
+                            try {
+
+                                // open a URL connection to the Servlet
+                                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                                URL url = new URL(upLoadServerUri);
+
+                                // Open a HTTP  connection to  the URL
+                                conn = (HttpURLConnection) url.openConnection();
+                                conn.setDoInput(true); // Allow Inputs
+                                conn.setDoOutput(true); // Allow Outputs
+                                conn.setUseCaches(false); // Don't use a Cached Copy
+                                conn.setRequestMethod("POST");
+                                conn.setRequestProperty("Connection", "Keep-Alive");
+                                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                                conn.setRequestProperty("uploaded_file", fileName);
+
+                                dos = new DataOutputStream(conn.getOutputStream());
+
+                                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                                        + fileName + "\"" + lineEnd);
+
+                                dos.writeBytes(lineEnd);
+
+                                // create a buffer of  maximum size
+                                bytesAvailable = fileInputStream.available();
+
+                                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                buffer = new byte[bufferSize];
+
+                                // read file and write it into form...
+                                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                                while (bytesRead > 0) {
+
+                                    dos.write(buffer, 0, bufferSize);
+                                    bytesAvailable = fileInputStream.available();
+                                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                                }
+
+                                // send multipart form data necesssary after file data...
+                                dos.writeBytes(lineEnd);
+                                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                                // Responses from the server (code and message)
+                                serverResponseCode = conn.getResponseCode();
+                                String serverResponseMessage = conn.getResponseMessage();
+
+                                Log.i("ootg", "HTTP Response is : "
+                                        + serverResponseMessage + ": " + serverResponseCode);
+
+                                if (serverResponseCode == 200) {
+                                    StringBuilder response = new StringBuilder();
+                                    BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                    String strline;
+                                    while ((strline = input.readLine()) != null) {
+                                        response.append(strline);
+                                    }
+                                    input.close();
+
+                                    Log.i("ootg", response.toString());
+                                    Server_full_path = response.toString();
+                                }
+
+                                //close the streams //
+                                fileInputStream.close();
+                                dos.flush();
+                                dos.close();
+
+                            } catch (MalformedURLException ex) {
+
+
+                                ex.printStackTrace();
+
+
+                                Log.e("ootg", "error: " + ex.getMessage(), ex);
+                            } catch (Exception e) {
+
+
+                                e.printStackTrace();
+
+
+                                Log.e("ootg", "Exception : "
+                                        + e.getMessage(), e);
+                            }
+
+                            return serverResponseCode;
+
+                        } // End else block
+                    }
 
                     @Override
                     protected Void doInBackground(Void... params) {
 
+                        if (image_path_berowsed != "") {
+
+                            uploadFile(image_path_berowsed);
+
+
+                        }
+
+
                         try {
                             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(9);
-                            nameValuePairs.add(new BasicNameValuePair("sh_id",shop_Identifier ));
+                            nameValuePairs.add(new BasicNameValuePair("sh_id", shop_Identifier));
                             nameValuePairs.add(new BasicNameValuePair("p_id", pro_id));
                             nameValuePairs.add(new BasicNameValuePair("p_name", pro_name));
                             nameValuePairs.add(new BasicNameValuePair("p_desc", pro_desc));
@@ -115,14 +242,15 @@ public class addProduct extends AppCompatActivity {
                             nameValuePairs.add(new BasicNameValuePair("p_type", pro_type));
                             nameValuePairs.add(new BasicNameValuePair("p_cat", pro_cat));
                             nameValuePairs.add(new BasicNameValuePair("p_avail", available));
+                            nameValuePairs.add(new BasicNameValuePair("p_image", Server_full_path));
                             HttpClient httpclient = new DefaultHttpClient();
                             HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/add_product.php");
                             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                            httpclient.execute(httppost);
+                            HttpResponse s = httpclient.execute(httppost);
+                            //         StatusLine d=s.getStatusLine();
 
-                        }
-                        catch (IOException e)
-                        {
+
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                         return null;
@@ -131,7 +259,7 @@ public class addProduct extends AppCompatActivity {
                     @Override
                     protected void onPostExecute(Void aVoid) {
                         // Notifies UI when the task is done
-                       // textView.setText("Insert finished!");
+                        // textView.setText("Insert finished!");
                         Toast.makeText(getBaseContext(), "Sent", Toast.LENGTH_SHORT).show();
                         pid.setText("");
                         pname.setText("");
@@ -195,7 +323,7 @@ public class addProduct extends AppCompatActivity {
                 // Log.i("ootg", "cat:"+category_product);
 
 
-           /////////////////////////////////////////////
+                /////////////////////////////////////////////
 
 
 
@@ -246,15 +374,38 @@ public class addProduct extends AppCompatActivity {
                 text.setText("*");
               */
 
-                    //display message if text field is empty
-                    //Toast.makeText(getBaseContext(),"All fields are required",Toast.LENGTH_SHORT).show();
+                //display message if text field is empty
+                //Toast.makeText(getBaseContext(),"All fields are required",Toast.LENGTH_SHORT).show();
 
             }
         });
-
-
+        btnpimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 100);
+            }
+        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            //InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
+            Log.i("ootg", data.getData().toString());
+            image_path_berowsed = data.getData().toString().substring(7);
+
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+        }
     }
 
 }

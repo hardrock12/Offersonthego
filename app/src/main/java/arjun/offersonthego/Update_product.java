@@ -1,5 +1,6 @@
 package arjun.offersonthego;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,19 +29,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Update_product extends AppCompatActivity {
 
-    public Button update_button;
+    public Button update_button, update_image;
     public EditText pid,pname,pdesc,pprice,ptype,pmrp,text;
     public Spinner pcat,pavail;
     Context context;
+    String image_path_berowsed = "";
+    String serve_full_image_path = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +65,7 @@ public class Update_product extends AppCompatActivity {
         TextView shop_iden = (TextView)findViewById(R.id.uidentifier);
         shop_iden.setText(shop_Identifier);
 
-
+        update_image = (Button) findViewById(R.id.btn_update_image);
         update_button = (Button)findViewById(R.id.usendVal);
 
        // pid =(EditText)findViewById(R.id.uP_id);
@@ -79,7 +86,15 @@ public class Update_product extends AppCompatActivity {
         Log.i("ootg", "http://offersonthego.16mb.com/API/updateRetrive.php?shopid=" + shop_Identifier + "&pid=" + product_id);
         tasks.execute("http://offersonthego.16mb.com/API/updateRetrive.php?shopid=" + shop_Identifier + "&pid=" + product_id);
 
-
+        update_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+            }
+        });
         update_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,11 +120,128 @@ public class Update_product extends AppCompatActivity {
 
 
                 AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+                    public int uploadFile(String sourceFileUri) {
+                        String upLoadServerUri = "http://offersonthego.16mb.com/API/file_upload.php";
+                        int serverResponseCode = 0;
+                        String uploaded_file = "";
+                        String fileName = sourceFileUri;
 
+                        HttpURLConnection conn = null;
+                        DataOutputStream dos = null;
+                        String lineEnd = "\r\n";
+                        String twoHyphens = "--";
+                        String boundary = "*****";
+                        int bytesRead, bytesAvailable, bufferSize;
+                        byte[] buffer;
+                        int maxBufferSize = 1 * 1024 * 1024;
+                        File sourceFile = new File(sourceFileUri);
+
+                        if (!sourceFile.isFile()) {
+
+
+                            return 0;
+
+                        } else {
+                            try {
+
+                                // open a URL connection to the Servlet
+                                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                                URL url = new URL(upLoadServerUri);
+
+                                // Open a HTTP  connection to  the URL
+                                conn = (HttpURLConnection) url.openConnection();
+                                conn.setDoInput(true); // Allow Inputs
+                                conn.setDoOutput(true); // Allow Outputs
+                                conn.setUseCaches(false); // Don't use a Cached Copy
+                                conn.setRequestMethod("POST");
+                                conn.setRequestProperty("Connection", "Keep-Alive");
+                                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                                conn.setRequestProperty("uploaded_file", fileName);
+
+                                dos = new DataOutputStream(conn.getOutputStream());
+
+                                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                                        + fileName + "\"" + lineEnd);
+
+                                dos.writeBytes(lineEnd);
+
+                                // create a buffer of  maximum size
+                                bytesAvailable = fileInputStream.available();
+
+                                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                buffer = new byte[bufferSize];
+
+                                // read file and write it into form...
+                                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                                while (bytesRead > 0) {
+
+                                    dos.write(buffer, 0, bufferSize);
+                                    bytesAvailable = fileInputStream.available();
+                                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                                }
+
+                                // send multipart form data necesssary after file data...
+                                dos.writeBytes(lineEnd);
+                                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                                // Responses from the server (code and message)
+                                //   serverResponseCode = conn.getResponseCode();
+                                String serverResponseMessage = conn.getResponseMessage();
+
+                                Log.i("uploadFile", "HTTP Response is : "
+                                        + serverResponseMessage + ": " + serverResponseCode);
+
+                                StringBuilder response = new StringBuilder();
+                                BufferedReader input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                String strline;
+                                while ((strline = input.readLine()) != null) {
+                                    response.append(strline);
+                                }
+                                input.close();
+
+                                Log.i("ootg", response.toString());
+                                serve_full_image_path = response.toString();
+
+
+                                //close the streams //
+                                fileInputStream.close();
+                                dos.flush();
+                                dos.close();
+
+                            } catch (MalformedURLException ex) {
+
+
+                                ex.printStackTrace();
+
+
+                                Log.e("ootg", "error: " + ex.getMessage(), ex);
+                            } catch (Exception e) {
+
+
+                                e.printStackTrace();
+
+
+                                Log.e("ootg", "Exception : "
+                                        + e.getMessage(), e);
+                            }
+
+                            return serverResponseCode;
+
+                        } // End else block
+                    }
 
                     @Override
                     protected Void doInBackground(Void... params) {
+                        if (image_path_berowsed != "") {
+                            int res = uploadFile(image_path_berowsed);
 
+
+                        }
                         try {
 
                             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(9);
@@ -122,6 +254,7 @@ public class Update_product extends AppCompatActivity {
                             nameValuePairs.add(new BasicNameValuePair("p_type", pro_type));
                             nameValuePairs.add(new BasicNameValuePair("p_cat", pro_cat));
                             nameValuePairs.add(new BasicNameValuePair("p_avail", available));
+                            nameValuePairs.add(new BasicNameValuePair("p_image", serve_full_image_path));
                             HttpClient httpclient = new DefaultHttpClient();
                             //HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/add_product.php");
                             HttpPost httppost = new HttpPost("http://offersonthego.16mb.com/API/update_product.php");
@@ -153,7 +286,21 @@ public class Update_product extends AppCompatActivity {
         });
 
 
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            //InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
+            Log.i("ootg", data.getData().toString());
+            image_path_berowsed = data.getData().toString().substring(7);
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class product_Details extends AppCompatActivity {
     public static double CURRENT_LONG;
     Context mcontext;
     Dialog shop_Review;
-
+    String rating_Str;
     public void registerGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
@@ -141,7 +142,9 @@ public class product_Details extends AppCompatActivity {
                         shop_Review.setCancelable(true);
                         shop_Review.setContentView(R.layout.write_review_dialog);
                         shop_Review.setTitle("Reviews:");
-                        Button sbt = (Button) shop_Review.findViewById(R.id.btn_submit_review_shop);
+
+                        final Button sbt = (Button) shop_Review.findViewById(R.id.btn_submit_review_shop);
+                        sbt.setEnabled(false);
                         sbt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -165,6 +168,14 @@ public class product_Details extends AppCompatActivity {
                                 }, "http://www.google.com");
                                 m.execute();
                                 shop_Review.dismiss();
+                            }
+                        });
+                        RatingBar rb = (RatingBar) shop_Review.findViewById(R.id.rb_review_dialog);
+                        rb.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                            @Override
+                            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                rating_Str = String.valueOf(rating);
+                                sbt.setEnabled(true);
                             }
                         });
 
