@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +18,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +36,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -48,7 +53,7 @@ public class Update_product extends AppCompatActivity {
     Context context;
     String image_path_berowsed = "";
     String serve_full_image_path = "";
-
+    ImageView preview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,8 @@ public class Update_product extends AppCompatActivity {
         ptype =(EditText)findViewById(R.id.uP_type);
         pcat = (Spinner)findViewById(R.id.uP_category);
         pavail =(Spinner)findViewById(R.id.uP_avail);
+        preview = (ImageView) findViewById(R.id.pp);
+        preview = (ImageView) findViewById(R.id.pp);
 
         UpdateSellerProductTask tasks = new UpdateSellerProductTask(findViewById(android.R.id.content),this);
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -299,6 +306,16 @@ public class Update_product extends AppCompatActivity {
             //InputStream inputStream = context.getContentResolver().openInputStream(data.getData());
             Log.i("ootg", data.getData().toString());
             image_path_berowsed = data.getData().toString().substring(7);
+            Uri targetUri = data.getData();
+            //textTargetUri.setText(targetUri.toString());
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                preview.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
         }
     }

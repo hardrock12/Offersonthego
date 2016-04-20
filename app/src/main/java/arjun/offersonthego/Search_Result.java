@@ -36,7 +36,7 @@ public class Search_Result extends AppCompatActivity {
     public static String GOOGLE_DIRECTION_MATRIX = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     public static String SEARCH_TERM = "";
     public static String SEARCH_CATEGORY = "";
-    public static String SEARCH_REGION = "Nearby";
+    public static String SEARCH_REGION = "All";
     public static String SEARCH_SHOP_ID="arjun.offersonthego.productdetails.shopid";
     public static String SEARCH_PRODUCT_ID="arjun.offersonthego.productdetails.productid";
     public static boolean response_Ready = false;
@@ -52,7 +52,7 @@ public class Search_Result extends AppCompatActivity {
 
     Context context;
     static boolean stop_image_download = false;
-public ArrayList<Search_Results_Model> Nearby(ArrayList<Search_Results_Model> arr)
+public ArrayList<Search_Results_Model> all(ArrayList<Search_Results_Model> arr)
 {
 
     Log.i("ootg", SEARCH_REGION);
@@ -157,8 +157,8 @@ return arr;
 
                     }
 
-                    if (SEARCH_REGION.equals("Nearby")) {
-response_result_model_to_adapters=Nearby(response_result_model_to_adapters);
+                    if (SEARCH_REGION.equals("All")) {
+response_result_model_to_adapters=all(response_result_model_to_adapters);
                     }
                     arraylist = response_result_model_to_adapters;
                     adap.clear();

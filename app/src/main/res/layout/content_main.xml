@@ -9,8 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="arjun.offersonthego.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="arjun.offersonthego.MainActivity">
 
     <EditText
         android:layout_width="200dp"
@@ -43,11 +42,101 @@
         android:entries="@array/categoryofproducts"/>
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/fimage1"
+        android:maxHeight="150dp"
+        android:maxWidth="150dp"
+        android:layout_above="@+id/fname2"
+        android:layout_alignLeft="@+id/fname2"
+        android:layout_alignStart="@+id/fname2"
+        android:layout_x="1dp"
+        android:layout_y="52dp" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/fname1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_x="180dp"
+        android:layout_y="57dp"
+        android:layout_alignTop="@+id/fimage1"
+        android:layout_toRightOf="@+id/fimage1"
+        android:layout_toEndOf="@+id/fimage1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/fprice1"
+        android:layout_x="184dp"
+        android:layout_y="94dp"
+        android:layout_below="@+id/fname1"
+        android:layout_toRightOf="@+id/fimage1"
+        android:layout_toEndOf="@+id/fimage1"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/fmrp1"
+
+        android:layout_x="186dp"
+        android:layout_y="120dp"
+        android:layout_below="@+id/fprice1"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/fname2"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_x="4dp"
+        android:layout_y="234dp"
+        android:layout_alignTop="@+id/fimage2"
+        android:layout_alignLeft="@+id/txt_search"
+        android:layout_alignStart="@+id/txt_search" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/fprice2"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/fname2"
+        android:layout_alignLeft="@+id/fname2"
+        android:layout_alignStart="@+id/fname2"
+        android:layout_x="3dp"
+        android:layout_y="276dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/fmrp2"
+
+        android:layout_below="@+id/fprice2"
+        android:layout_alignLeft="@+id/fprice2"
+        android:layout_alignStart="@+id/fprice2"
+        android:layout_x="12dp"
+        android:layout_y="296dp" />
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:maxHeight="150dp"
+        android:maxWidth="150dp"
+        android:id="@+id/fimage2"
+        android:layout_x="150dp"
+        android:layout_y="154dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp" />
+        android:layout_toRightOf="@+id/fimage1"
+        android:layout_toEndOf="@+id/fimage1" />
+
 
 </RelativeLayout>

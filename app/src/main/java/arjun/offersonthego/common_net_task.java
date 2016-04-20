@@ -32,7 +32,7 @@ public class common_net_task extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... url) {
         String response = "";
-
+        Log.i("ootg", "common net task fetching=>" + url_to_get);
 
         try {
             response = get_results(url_to_get);
