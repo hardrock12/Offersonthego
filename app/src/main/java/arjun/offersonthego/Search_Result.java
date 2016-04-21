@@ -1,6 +1,5 @@
 package arjun.offersonthego;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,17 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.ConnectionPoolDataSource;
 
 
 public class Search_Result extends AppCompatActivity {
@@ -37,10 +31,11 @@ public class Search_Result extends AppCompatActivity {
     public static String SEARCH_TERM = "";
     public static String SEARCH_CATEGORY = "";
     public static String SEARCH_REGION = "All";
-    public static String SEARCH_SHOP_ID="arjun.offersonthego.productdetails.shopid";
-    public static String SEARCH_PRODUCT_ID="arjun.offersonthego.productdetails.productid";
+    public static String SEARCH_SHOP_ID = "arjun.offersonthego.productdetails.shopid";
+    public static String SEARCH_PRODUCT_ID = "arjun.offersonthego.productdetails.productid";
     public static boolean response_Ready = false;
     public static ArrayList<Search_Results_Model> stored_search_results;
+    static boolean stop_image_download = false;
     public ProgressDialog mprogressDialoggps;
     public ArrayList<Search_Results_Model> response_result_model_to_adapters;
     public searchtask tasks;
@@ -49,31 +44,45 @@ public class Search_Result extends AppCompatActivity {
     public double CURRENT_LONG;
     public Search_Results_Model model_for_loading_image;
     public Search_ItemsAdapter search_itemsAdapter;
-
     Context context;
-    static boolean stop_image_download = false;
-public ArrayList<Search_Results_Model> all(ArrayList<Search_Results_Model> arr)
-{
 
-    Log.i("ootg", SEARCH_REGION);
-    for (int i = 0; i < arr.size(); i++) {
-        int min = i;
-        Search_Results_Model temp;
-        for (int j = i + 1; j < arr.size(); j++) {
-            if (arr.get(min).distanceinm > arr.get(j).distanceinm) {
-                min = j;
+    public ArrayList<Search_Results_Model> all(ArrayList<Search_Results_Model> arr) {
+
+        Log.i("ootg", SEARCH_REGION);
+        for (int i = 0; i < arr.size(); i++) {
+            int min = i;
+            Search_Results_Model temp;
+            for (int j = i + 1; j < arr.size(); j++) {
+                if (arr.get(min).distanceinm > arr.get(j).distanceinm) {
+                    min = j;
+
+                }
 
             }
 
+            temp = arr.get(i);
+            arr.set(i, arr.get(min));
+            arr.set(min, temp);
         }
 
-        temp = arr.get(i);
-        arr.set(i, arr.get(min));
-        arr.set(min, temp);
+        return arr;
     }
 
-return arr;
-}
+    public ArrayList<Search_Results_Model> nearby(ArrayList<Search_Results_Model> arr) {
+
+        float nearbym = 5.0f;
+        SharedPreferences sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
+        nearbym = sharedPreferences.getFloat("nearby_range", 5.0f);
+        Log.i("ootg", SEARCH_REGION);
+        for (int i = 0; i < arr.size(); i++) {
+            int min = i;
+            if (arr.get(i).distanceinm > nearbym) {
+                arr.remove(i);
+            }
+        }
+
+        return arr;
+    }
 
     public void load_Images() {
         for (int i = 0; i < arraylist.size(); i++) {
@@ -102,6 +111,7 @@ return arr;
 
         update_Locations();
     }
+
     public void update_Locations() {
 
         if (stop_image_download) {
@@ -158,7 +168,9 @@ return arr;
                     }
 
                     if (SEARCH_REGION.equals("All")) {
-response_result_model_to_adapters=all(response_result_model_to_adapters);
+                        response_result_model_to_adapters = all(response_result_model_to_adapters);
+                    } else if (SEARCH_REGION.equals("Nearby")) {
+                        response_result_model_to_adapters = nearby(response_result_model_to_adapters);
                     }
                     arraylist = response_result_model_to_adapters;
                     adap.clear();
@@ -210,7 +222,7 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
             public void onProviderDisabled(String provider) {
             }
         };
-      //  if(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
+        //  if(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200, 5, locationListener);
     }
 
@@ -235,7 +247,7 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stop_image_download=false;
+        stop_image_download = false;
         setContentView(R.layout.activity_search__result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -252,12 +264,11 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
          */
 
 
-
         //get by shared preference
         SharedPreferences sharedPreferences = getSharedPreferences("searchValue", Context.MODE_PRIVATE);
         String searchterm = (sharedPreferences.getString("search_word", ""));
-        String searchcat = (sharedPreferences.getString("search_category",""));
-        String searchregion = (sharedPreferences.getString("search_region",""));
+        String searchcat = (sharedPreferences.getString("search_category", ""));
+        String searchregion = (sharedPreferences.getString("search_region", ""));
 
         SEARCH_TERM = searchterm;
         SEARCH_CATEGORY = searchcat;
@@ -274,7 +285,6 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
         SEARCH_REGION = searchregion;
 
 
-
 // connecting to listview by adapter
         arraylist = new ArrayList<Search_Results_Model>();
         search_itemsAdapter = new Search_ItemsAdapter(this, arraylist);
@@ -284,10 +294,10 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
         lvsresults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             Intent inte=new Intent(context,product_Details.class);
+                Intent inte = new Intent(context, product_Details.class);
                 Search_Result.stop_image_download = true;
-                inte.putExtra(SEARCH_SHOP_ID,arraylist.get(position).shopid);
-                inte.putExtra(SEARCH_PRODUCT_ID,arraylist.get(position).productid);
+                inte.putExtra(SEARCH_SHOP_ID, arraylist.get(position).shopid);
+                inte.putExtra(SEARCH_PRODUCT_ID, arraylist.get(position).productid);
                 startActivity(inte);
 
             }
@@ -300,8 +310,6 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
             public void run() {
                 arraylist = stored_search_results;
                 load_Images();
-
-
 
 
             }
@@ -325,7 +333,7 @@ response_result_model_to_adapters=all(response_result_model_to_adapters);
                 Filter_list_dialog filter_list_dialog = new Filter_list_dialog(context, findViewById(android.R.id.content), new Runnable() {
                     @Override
                     public void run() {
-                        arraylist=stored_search_results;
+                        arraylist = stored_search_results;
                         load_Images();
                     }
                 });

@@ -349,37 +349,8 @@ public class MainActivity extends AppCompatActivity {
                         mregion_term = "All";
                         break;
                     case 1:
+                        mregion_term = "Nearby";
 
-                        common_net_task address_ret = new common_net_task(new common_net_task_Runnnable() {
-                            String response = "";
-
-                            public void init(String s) {
-                                response = s;
-
-                            }
-
-                            @Override
-                            public void run() {
-                                String address = "";
-                                Log.i("ootg", response);
-                                try {
-                                    JSONArray addresseslist = new JSONObject(response).getJSONArray("results");
-                                    //for (int i = 0; i < addresseslist.length(); i++) {
-
-
-                                    address = addresseslist.getJSONObject(0).getString("formatted_address");
-                                    Log.i("ootg", address);
-                                    //  arrayList.add(address);
-
-                                    //}
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                mregion_term = address;
-                            }
-
-                        }, "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + CURRENT_LAT + "," + CURRENT_LONG + "&key=AIzaSyBLP5q5-qduRWzkP0Tqh4_Unlt2TTbuL0Y");
-                        address_ret.execute();
                         break;
                     case 2:
 
@@ -563,7 +534,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(context, SettingsActivity.class));
+            startActivity(new Intent(context, Settings.class));
             return true;
         } else if (id == R.id.sigin_as_seller) {
             Intent intent = new Intent(context, login.class);
