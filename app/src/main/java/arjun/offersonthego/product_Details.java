@@ -17,6 +17,7 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -27,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class product_Details extends AppCompatActivity {
     Context mcontext;
     Dialog shop_Review;
     String rating_Str;
+
     public void registerGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
@@ -64,7 +67,7 @@ public class product_Details extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Search_Result.stop_image_download=false;
+        Search_Result.stop_image_download = false;
         registerGPS();
         setContentView(R.layout.activity_product__details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -105,7 +108,7 @@ public class product_Details extends AppCompatActivity {
                 TextView sellingprice = (TextView) findViewById(R.id.selling_price);
                 TextView yousave = (TextView) findViewById(R.id.you_save);
                 TextView Product_rating = (TextView) findViewById(R.id.Product_Rating);
-                TextView desc = (TextView) findViewById(R.id.descpriton);
+                TextView desc = (TextView) findViewById(R.id.textView4);
                 TextView avai = (TextView) findViewById(R.id.Availab);
                 ListView randr = (ListView) findViewById(R.id.rating_and_review);
                 RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
@@ -113,8 +116,6 @@ public class product_Details extends AppCompatActivity {
                 final TextView shop_address = (TextView) findViewById(R.id.Shop_Address);
                 Button navi = (Button) findViewById(R.id.navigate_to);
                 Button write_Rev = (Button) findViewById(R.id.btn_write_a_review);
-
-
 
 
                 navi.setOnClickListener(new View.OnClickListener() {
@@ -144,17 +145,26 @@ public class product_Details extends AppCompatActivity {
                         shop_Review.setTitle("Reviews:");
 
                         final Button sbt = (Button) shop_Review.findViewById(R.id.btn_submit_review_shop);
+                        final EditText edt = (EditText) shop_Review.findViewById(R.id.txt_dialog_review);
+                        final RatingBar rtnbar = (RatingBar) shop_Review.findViewById(R.id.rb_review_dialog);
                         sbt.setEnabled(false);
                         sbt.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                                 String imei = telephonyManager.getDeviceId();
-                                SharedPreferences sharedPreferences = getSharedPreferences("user_details", Context.MODE_PRIVATE);
+                                SharedPreferences sharedPreferences = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE);
                                 String uname = (sharedPreferences.getString("name", "Anonymous"));
                                 //String searchcat = (sharedPreferences.getString("search_category",""));
                                 //String searchregion = (sharedPreferences.getString("search_region",""));
+                                String ratin = "";
+                                try {
+                                    ratin = URLEncoder.encode(edt.getText().toString(), "UTF-8");
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
 
+
+                                }
                                 common_net_task m = new common_net_task(new common_net_task_Runnnable() {
                                     @Override
                                     public void init(String response) {
@@ -165,7 +175,7 @@ public class product_Details extends AppCompatActivity {
                                     public void run() {
 
                                     }
-                                }, "http://www.google.com");
+                                }, "http://offersonthego.16mb.com/API/update_shop_rating.php?sid=" + shop_id + "&userid=" + imei + "&reviews=" + ratin + "&cname=" + uname + "&rating=" + String.valueOf(rtnbar.getRating()));
                                 m.execute();
                                 shop_Review.dismiss();
                             }

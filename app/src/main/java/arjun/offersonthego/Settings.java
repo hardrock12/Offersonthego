@@ -52,14 +52,14 @@ public class Settings extends AppCompatActivity {
                             float val = Float.parseFloat(ed.getText().toString());
                             SharedPreferences.Editor editor = s.edit();
                             editor.putFloat("nearby_Range", val);
-
+                            editor.commit();
 
                         } else if (position == 1) {
 
 
                             SharedPreferences.Editor editor = s.edit();
                             editor.putString("name", ed.getText().toString());
-
+                            editor.commit();
 
                         }
                         d.dismiss();

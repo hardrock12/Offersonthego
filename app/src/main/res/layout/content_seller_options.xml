@@ -199,7 +199,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#0d0d0d"
-        android:text="Rating :"
+        android:text=""
         android:id="@+id/textView3"
         android:textSize="15dp"
         android:layout_x="41dp"
@@ -213,9 +213,10 @@
         android:layout_width="200px"
         android:layout_height="wrap_content"
         android:id="@+id/shop_rating"
-        android:text="sh_rating"
+        android:text=""
         android:layout_x="226dp"
         android:layout_y="64dp"
+
         android:layout_alignBottom="@+id/textView3"
         android:layout_toRightOf="@+id/title4"
         android:layout_toEndOf="@+id/title4" />

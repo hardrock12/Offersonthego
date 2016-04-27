@@ -170,17 +170,17 @@
                 android:text="Description"
                 android:id="@+id/descpriton"
                 android:layout_below="@+id/ratingBar"
-                android:layout_toLeftOf="@+id/ratingBar"
-                android:layout_toStartOf="@+id/ratingBar" />
+                />
 
             <TextView
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
+
                 android:layout_below="@+id/descpriton"
-                android:layout_toRightOf="@+id/descpriton"
-                android:layout_alignRight="@+id/selling_price"
-                android:layout_alignEnd="@+id/selling_price" />
+                android:layout_alignRight="@+id/you_save"
+                android:layout_alignEnd="@+id/you_save"
+                android:layout_marginTop="30dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -199,8 +199,7 @@
                 android:layout_height="300dp"
                 android:id="@+id/rating_and_review"
                 android:layout_below="@+id/navigate_to"
-                android:layout_alignLeft="@+id/descpriton"
-                android:layout_alignStart="@+id/descpriton">
+               >
 
             </ListView>
 
@@ -209,9 +208,9 @@
                 android:layout_height="wrap_content"
                 android:text="Write a Review"
                 android:id="@+id/btn_write_a_review"
-                android:layout_alignTop="@+id/call_button"
-                android:layout_alignRight="@+id/selling_price"
-                android:layout_alignEnd="@+id/selling_price" />
+                android:layout_above="@+id/txt_contactus"
+                android:layout_alignRight="@+id/ratingBar"
+                android:layout_alignEnd="@+id/ratingBar" />
         </RelativeLayout>
 
 
